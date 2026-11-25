@@ -2,8 +2,8 @@
 autonomy: auto
 ci: wait
 branch: feat/thinking-default
-delivery: in-progress
-pr: 7
+delivery: in-review
+pr: 9
 ---
 
 # Rea launcher — requirements
