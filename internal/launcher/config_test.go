@@ -3,6 +3,7 @@ package launcher
 import (
 	"bytes"
 	"encoding/json"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"testing"
@@ -15,6 +16,7 @@ func testSession() Session {
 		REAScript:    "/cache/rea-6.10.1/node_modules/rea-agents/scripts/rea.mjs",
 		REAEnv:       map[string]string{"GHIDRA_INSTALL_DIR": "/opt/ghidra"},
 		Instructions: "/cache/AGENTS.md",
+		SkillsDir:    "/cache/rea-6.10.1/opencode/skills",
 	}
 }
 
@@ -55,9 +57,9 @@ func decide(rules []rule, name string) string {
 	return action
 }
 
-// permissionRules returns the top-level permission rules with a flat action, in order,
-// and the raw bash rules.
-func permissionRules(t *testing.T, cfg []byte) (top []rule, bash []rule) {
+// permissionRules returns the top-level permission rules with a flat action, in order, and
+// the per-pattern rules of each tool that has them.
+func permissionRules(t *testing.T, cfg []byte) (top []rule, nested map[string][]rule) {
 	t.Helper()
 	var doc struct {
 		Permission json.RawMessage `json:"permission"`
@@ -69,14 +71,15 @@ func permissionRules(t *testing.T, cfg []byte) (top []rule, bash []rule) {
 	if tok, err := dec.Token(); err != nil || tok != json.Delim('{') {
 		t.Fatalf("permission is not an object: %s", doc.Permission)
 	}
+	nested = map[string][]rule{}
 	for dec.More() {
 		key, _ := dec.Token()
 		var raw json.RawMessage
 		if err := dec.Decode(&raw); err != nil {
 			t.Fatal(err)
 		}
-		if key == "bash" {
-			bash = orderedRules(t, raw)
+		if bytes.HasPrefix(raw, []byte("{")) {
+			nested[key.(string)] = orderedRules(t, raw)
 			continue
 		}
 		var action string
@@ -85,7 +88,7 @@ func permissionRules(t *testing.T, cfg []byte) (top []rule, bash []rule) {
 		}
 		top = append(top, rule{key.(string), action})
 	}
-	return top, bash
+	return top, nested
 }
 
 func marshalConfig(t *testing.T) []byte {
@@ -100,26 +103,26 @@ func marshalConfig(t *testing.T) []byte {
 func TestREAToolsThatDriveSomethingAsk(t *testing.T) {
 	top, _ := permissionRules(t, marshalConfig(t))
 	cases := map[string]string{
-		"rea_binary_session":             "allow",
-		"rea_procedure_pseudo_code":      "allow",
-		"rea_xrefs":                      "allow",
-		"rea_list_strings":               "allow",
-		"rea_inspect_artifact":           "allow",
-		"rea_install_adb_package":        "ask",
-		"rea_push_adb_file":              "ask",
-		"rea_list_adb_devices":           "ask",
-		"rea_capture_process_scenario":   "ask",
-		"rea_capture_native_ui_scenario": "ask",
-		"rea_observe_native_calls":       "ask",
-		"rea_inspect_web_page":           "ask",
-		"rea_list_browser_targets":       "ask",
-		"rea_inspect_electron_page":      "ask",
-		"rea_observe_javascript_runtime": "ask",
+		"rea_binary_session":                  "allow",
+		"rea_procedure_pseudo_code":           "allow",
+		"rea_xrefs":                           "allow",
+		"rea_list_strings":                    "allow",
+		"rea_inspect_artifact":                "allow",
+		"rea_install_adb_package":             "ask",
+		"rea_push_adb_file":                   "ask",
+		"rea_list_adb_devices":                "ask",
+		"rea_capture_process_scenario":        "ask",
+		"rea_capture_native_ui_scenario":      "ask",
+		"rea_observe_native_calls":            "ask",
+		"rea_inspect_web_page":                "ask",
+		"rea_list_browser_targets":            "ask",
+		"rea_inspect_electron_page":           "ask",
+		"rea_observe_javascript_runtime":      "ask",
 		"rea_list_javascript_runtime_targets": "ask",
-		"rea_trace_native_ui_action":     "ask",
-		"webfetch":                       "ask",
-		"websearch":                      "ask",
-		"external_directory":             "ask",
+		"rea_trace_native_ui_action":          "ask",
+		"edit":                                "ask",
+		"webfetch":                            "deny",
+		"websearch":                           "deny",
 	}
 	for tool, want := range cases {
 		if got := decide(top, tool); got != want {
@@ -128,19 +131,53 @@ func TestREAToolsThatDriveSomethingAsk(t *testing.T) {
 	}
 }
 
-func TestShellCommandsAskButReadingGitState(t *testing.T) {
-	_, bash := permissionRules(t, marshalConfig(t))
+func TestShellCommandsAskButExactGitReads(t *testing.T) {
+	_, nested := permissionRules(t, marshalConfig(t))
 	cases := map[string]string{
-		"git status --short": "allow",
-		"git diff HEAD":      "allow",
-		"git log -3":         "allow",
-		"git push":           "ask",
-		"rm -rf /":           "ask",
-		"curl https://x":     "ask",
+		"git status":                       "allow",
+		"git diff":                         "allow",
+		"git log":                          "allow",
+		"git difftool":                     "ask",
+		"git diff --no-index a /etc/hosts": "ask",
+		"git push":                         "ask",
+		"rm -rf /":                         "ask",
 	}
 	for cmd, want := range cases {
-		if got := decide(bash, cmd); got != want {
+		if got := decide(nested["bash"], cmd); got != want {
 			t.Errorf("bash %q: %q, want %q", cmd, got, want)
+		}
+	}
+}
+
+func TestKeyFilesAreNotRead(t *testing.T) {
+	_, nested := permissionRules(t, marshalConfig(t))
+	cases := map[string]string{
+		"main.go":          "allow",
+		"src/.env":         "deny",
+		"src/.env.local":   "deny",
+		"src/.env.example": "allow",
+		"certs/server.pem": "deny",
+		"id.key":           "deny",
+		"/home/u/.npmrc":   "deny",
+	}
+	for path, want := range cases {
+		if got := decide(nested["read"], path); got != want {
+			t.Errorf("read %q: %q, want %q", path, got, want)
+		}
+	}
+}
+
+func TestOnlyREASkillsAreReachableOutsideTheProject(t *testing.T) {
+	_, nested := permissionRules(t, marshalConfig(t))
+	skills := testSession().SkillsDir
+	cases := map[string]string{
+		filepath.Join(skills, "reverse-engineer-anything", "references", "evidence-workflows.md"): "allow",
+		"/etc/passwd":                    "deny",
+		"/cache/rea-6.10.1/package.json": "deny",
+	}
+	for path, want := range cases {
+		if got := decide(nested["external_directory"], path); got != want {
+			t.Errorf("external_directory %q: %q, want %q", path, got, want)
 		}
 	}
 }

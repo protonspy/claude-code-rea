@@ -2,8 +2,8 @@
 
 ## 1 · Configuration
 
-- [ ] 1.1 (Unit) Define the provider table and resolve the provider and the model — R1.1, R1.2, R1.3, R1.5
-- [ ] 1.2 (TDD) Build the OpenCode configuration as ordered JSON with the permission rules — R1.4, R4.1, R5.1, R5.2, R5.3
+- [x] 1.1 (Unit) Define the provider table and resolve the provider and the model — R1.1, R1.2, R1.3, R1.5
+- [x] 1.2 (TDD) Build the OpenCode configuration as ordered JSON with the permission rules — R1.4, R4.1, R5.1, R5.2, R5.3, R5.4
   _Depends 1.1_
 
 ## 2 · The provider key

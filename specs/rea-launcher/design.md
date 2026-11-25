@@ -82,10 +82,13 @@ directory. Neither touches a file OpenCode reads in other sessions.
     }
   },
   "permission": {
-    "bash": { "*": "ask", "git status*": "allow", "git diff*": "allow", "git log*": "allow" },
-    "webfetch": "ask",
-    "websearch": "ask",
-    "external_directory": "ask",
+    "bash": { "*": "ask", "git status": "allow", "git diff": "allow", "git log": "allow" },
+    "edit": "ask",
+    "read": { "*": "allow", "*.env": "deny", "*.env.*": "deny", "*.env.example": "allow",
+              "*.pem": "deny", "*.key": "deny", "*.npmrc": "deny" },
+    "webfetch": "deny",
+    "websearch": "deny",
+    "external_directory": { "*": "deny", "<managed>/rea-6.10.1/opencode/skills/*": "allow" },
     "rea_*": "allow",
     "rea_*adb*": "ask",
     "rea_capture_*": "ask",
@@ -106,6 +109,9 @@ configuration is built from an ordered object type with its own `MarshalJSON`. T
 by name: anything that installs on, starts or reads a device (`adb`), launches or attaches to a
 process, browser, page or application (`capture`, `observe`, `web`, `browser`, `electron`,
 `runtime`) or drives a native UI (`trace_native_`). Static analysis of a file on disk is allowed.
+The rest are the reviewed session rules of [[opencode]], with one exception added:
+`external_directory` lets OpenCode read REA's skills, whose `references/` the skill tells the
+model to read, and nothing else outside the project.
 
 The MCP `timeout` is OpenCode's limit for listing REA's tools — 5 s by default, short for a
 Node.js process loading a 186 MB package; 30 s is what REA's own setup gives Codex.

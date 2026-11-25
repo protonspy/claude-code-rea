@@ -62,9 +62,12 @@ installs them is adr:0002-launch-opencode-with-rea-from-a-go-launcher.
 
 ## R5 · Gating the agent
 
-- **R5.1** The launcher shall configure OpenCode to ask before running any shell command other than `git status`, `git diff` and `git log`, before fetching or searching the web, and before touching a path outside the project.
-- **R5.2** The launcher shall configure OpenCode to ask before calling an REA tool that drives a device, a process, a browser, a web page or a running application, and to allow REA's other tools without asking.
-- **R5.3** The launcher shall configure OpenCode with session sharing disabled.
+The rules are the reviewed session rules of [[opencode]], plus REA's.
+
+- **R5.1** The launcher shall configure OpenCode to ask before every edit and before running any shell command other than exactly `git status`, `git diff` and `git log`.
+- **R5.2** The launcher shall configure OpenCode to deny reading `.env` files other than `.env.example`, `.pem`, `.key` and `.npmrc` files, fetching or searching the web, and touching a path outside the project other than REA's skills.
+- **R5.3** The launcher shall configure OpenCode to ask before calling an REA tool that drives a device, a process, a browser, a web page or a running application, and to allow REA's other tools without asking.
+- **R5.4** The launcher shall configure OpenCode with session sharing disabled.
 
 ## R6 · Running OpenCode
 
