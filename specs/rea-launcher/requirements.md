@@ -1,8 +1,8 @@
 ---
 autonomy: auto
 ci: wait
-branch: feat/rea-launcher
-delivery: merged
+branch: feat/auto-approve
+delivery: in-progress
 pr: 3
 ---
 
@@ -72,6 +72,8 @@ The rules are the reviewed session rules of [[opencode]], plus REA's.
 - **R5.3** The launcher shall configure OpenCode to allow without asking only the REA tools reviewed as static analysis — none of which runs, attaches to or drives the target, a device, a debugger, a browser, a web page or an application — and to ask before calling any other REA tool, including one the review has not seen.
 - **R5.4** The launcher shall configure OpenCode with session sharing and code search disabled.
 - **R5.5** The launcher shall start OpenCode with project configuration, Claude Code compatibility files, skills from outside the launcher's directory, self-update and language-server downloads disabled, and without the variable that enables web search.
+- **R5.6** Where asking is not requested, the launcher shall start OpenCode's interface or its `run` command with every permission that is not denied approved without asking.
+- **R5.7** While permissions are approved without asking, the launcher shall print a warning to standard error naming what runs unasked and the flag that restores asking.
 
 ## R6 · Running OpenCode
 

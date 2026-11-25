@@ -14,13 +14,14 @@ import (
 )
 
 const usageText = `Usage:
-  rea-launcher [--provider nanogpt|nearai] [--model <id>] [--print-config] [--] [opencode arguments]
+  rea-launcher [--provider nanogpt|nearai] [--model <id>] [--ask] [--print-config] [--] [opencode arguments]
   rea-launcher setup [--provider nanogpt|nearai] [--ghidra <dir>] [--java-home <dir>]
   rea-launcher logout [--provider nanogpt|nearai]
   rea-launcher version
 
 Without a subcommand, installs what is missing, then starts OpenCode with REA in the
-current directory. Arguments after -- go to OpenCode unchanged.
+current directory, approving without asking every permission that is not denied unless
+--ask is given. Arguments after -- go to OpenCode.
 `
 
 // Main runs the launcher with args, the command line without the program name, and
@@ -76,6 +77,7 @@ func launch(ctx context.Context, args []string, sys System) int {
 	fs, provider := flags("rea-launcher", sys)
 	model := fs.String("model", "", "a model id of the provider, in place of its default")
 	printConfig := fs.Bool("print-config", false, "print the OpenCode configuration and exit")
+	ask := fs.Bool("ask", false, "ask before every permission that is not denied, instead of approving it")
 	p, status, ok := parse(fs, provider, args, sys)
 	if !ok {
 		return status
@@ -104,7 +106,14 @@ func launch(ctx context.Context, args []string, sys System) int {
 		fail(sys, err)
 		return 1
 	}
-	code, err := runOpenCode(ctx, sys, p, qualified, key, cfg, fs.Args())
+	opencodeArgs := fs.Args()
+	if !*ask {
+		var auto bool
+		if opencodeArgs, auto = withAutoApproval(opencodeArgs); auto {
+			fmt.Fprintln(sys.Stderr, "rea-launcher: warning: approvals are automatic — shell commands, edits and REA's runtime tools (Frida, gdb, adb, capture) run without asking; denied actions stay denied. Run with --ask to be asked.")
+		}
+	}
+	code, err := runOpenCode(ctx, sys, p, qualified, key, cfg, opencodeArgs)
 	if err != nil {
 		fail(sys, fmt.Errorf("run OpenCode: %w", err))
 		return 1

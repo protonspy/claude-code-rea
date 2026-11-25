@@ -3,6 +3,9 @@ package launcher
 import (
 	"context"
 	"fmt"
+	"os"
+	"slices"
+	"strings"
 )
 
 // keyVars are the environment variables every known provider's key travels in.
@@ -12,6 +15,26 @@ func keyVars() []string {
 		vars[i] = p.KeyVar
 	}
 	return vars
+}
+
+// withAutoApproval adds OpenCode's --auto to args, and reports whether it applies. OpenCode
+// accepts --auto only on its interface — no arguments, flags, or a project directory — and
+// on run, after the command name; on any other command it is a parse error, so those are
+// left as they are.
+func withAutoApproval(args []string) ([]string, bool) {
+	if slices.Contains(args, "--auto") {
+		return args, true
+	}
+	switch {
+	case len(args) == 0 || strings.HasPrefix(args[0], "-"):
+		return append([]string{"--auto"}, args...), true
+	case args[0] == "run":
+		return append([]string{"run", "--auto"}, args[1:]...), true
+	}
+	if info, err := os.Stat(args[0]); err == nil && info.IsDir() {
+		return append([]string{"--auto"}, args...), true
+	}
+	return args, false
 }
 
 // runOpenCode runs the managed OpenCode on the launcher's terminal with cfg and p's key in

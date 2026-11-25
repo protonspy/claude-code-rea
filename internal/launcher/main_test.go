@@ -53,7 +53,7 @@ func TestLaunchRunsOpenCodeWithTheSessionAndTheKey(t *testing.T) {
 	if code := Main([]string{"--", "run", "explain main"}, sys); code != 7 {
 		t.Fatalf("exit %d, want OpenCode's 7; stderr:\n%s", code, io.stderr)
 	}
-	if strings.Join(run.args, "|") != "run|explain main" {
+	if strings.Join(run.args, "|") != "run|--auto|explain main" {
 		t.Errorf("OpenCode args = %q", run.args)
 	}
 	if got := run.env["NANO_GPT_API_KEY"]; len(got) != 1 || got[0] != "sk-nano-secret" {
@@ -113,7 +113,7 @@ func TestOpenCodeArgumentsPassWithoutASeparator(t *testing.T) {
 	fakeToolchain(t, &sys)
 	run := withOpenCode(t, &sys, 0, "")
 	Main([]string{"--model", "lyber/deepseek-v4.1-flash-1017-abliterated", "run", "hi"}, sys)
-	if strings.Join(run.args, "|") != "run|hi" {
+	if strings.Join(run.args, "|") != "run|--auto|hi" {
 		t.Errorf("OpenCode args = %q", run.args)
 	}
 	if !strings.Contains(run.env["OPENCODE_CONFIG_CONTENT"][0], `"nano-gpt/lyber/deepseek-v4.1-flash-1017-abliterated"`) {
@@ -270,4 +270,48 @@ func TestHelperProcess(t *testing.T) {
 		return
 	}
 	os.Exit(code)
+}
+
+func TestAutomaticApprovalGoesWhereOpenCodeAcceptsIt(t *testing.T) {
+	project := t.TempDir()
+	cases := []struct {
+		in, want []string
+		auto     bool
+	}{
+		{nil, []string{"--auto"}, true},
+		{[]string{"-c"}, []string{"--auto", "-c"}, true},
+		{[]string{project}, []string{"--auto", project}, true},
+		{[]string{"run", "explain"}, []string{"run", "--auto", "explain"}, true},
+		{[]string{"run", "--auto", "x"}, []string{"run", "--auto", "x"}, true},
+		{[]string{"debug", "paths"}, []string{"debug", "paths"}, false},
+		{[]string{"mcp", "list"}, []string{"mcp", "list"}, false},
+	}
+	for _, c := range cases {
+		got, auto := withAutoApproval(c.in)
+		if strings.Join(got, "|") != strings.Join(c.want, "|") || auto != c.auto {
+			t.Errorf("withAutoApproval(%q) = %q, %v; want %q, %v", c.in, got, auto, c.want, c.auto)
+		}
+	}
+}
+
+func TestAutomaticApprovalWarnsAndAskRestoresAsking(t *testing.T) {
+	sys, io := testSystem(t, "NANO_GPT_API_KEY=k")
+	fakeToolchain(t, &sys)
+	run := withOpenCode(t, &sys, 0, "")
+	Main(nil, sys)
+	if strings.Join(run.args, "|") != "--auto" || !strings.Contains(io.stderr.String(), "approvals are automatic") || !strings.Contains(io.stderr.String(), "--ask") {
+		t.Errorf("default: args %q, stderr:\n%s", run.args, io.stderr)
+	}
+
+	io.stderr.Reset()
+	Main([]string{"--ask"}, sys)
+	if len(run.args) != 0 || strings.Contains(io.stderr.String(), "approvals are automatic") {
+		t.Errorf("--ask: args %q, stderr:\n%s", run.args, io.stderr)
+	}
+
+	io.stderr.Reset()
+	Main([]string{"--", "debug", "paths"}, sys)
+	if strings.Join(run.args, "|") != "debug|paths" || strings.Contains(io.stderr.String(), "approvals are automatic") {
+		t.Errorf("debug: args %q, stderr:\n%s", run.args, io.stderr)
+	}
 }

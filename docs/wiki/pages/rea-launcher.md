@@ -48,6 +48,7 @@ rea-launcher                                  # NanoGPT, the Heretic DeepSeek V4
 rea-launcher --provider nearai                # NEAR AI, in its TEE
 rea-launcher --model lyber/deepseek-v4.1-flash-1017-abliterated
 rea-launcher -- run "explain how C:\samples\app.exe checks its licence"
+rea-launcher --ask                            # be asked before each shell command, edit and REA runtime tool
 rea-launcher --print-config                   # the session configuration, without starting it
 rea-launcher logout                           # delete the stored key
 ```
@@ -73,8 +74,14 @@ The key is in OpenCode's environment, and so in that of its shell commands and l
 REA gets the variable blanked, so the targets REA runs do not inherit it, and npm installs REA
 without it.
 
-When a prompt comes, read the whole command, answer `once`, and reject anything that sends data
-to an address or reads credentials.
+**Approvals are automatic by default** (adr:0003-approve-launcher-sessions-automatically): the
+launcher starts OpenCode with `--auto`, so everything above that would ask — shell commands, edits,
+REA's runtime tools — runs without asking; what is denied stays denied. An instruction planted in a
+target can therefore run a command, start the sample through Frida or gdb, or read the key from
+OpenCode's environment and send it out with `curl`. Run sessions in a disposable VM with no
+secrets, on a NanoGPT key with a low spend cap, or pass `--ask`. When a prompt comes under
+`--ask`, read the whole command, answer `once`, and reject anything that sends data to an address
+or reads credentials.
 
 ## The AGENTS.md
 
