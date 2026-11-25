@@ -1,8 +1,8 @@
 ---
 autonomy: auto
 ci: wait
-branch: feat/auto-approve
-delivery: merged
+branch: feat/ghidra-compat
+delivery: in-progress
 pr: 5
 ---
 
@@ -56,10 +56,12 @@ installs them is adr:0002-launch-opencode-with-rea-from-a-go-launcher.
 ## R4 · REA
 
 - **R4.1** The launcher shall register REA with OpenCode as a local MCP server named `rea`, run as the managed Node.js on the managed REA's script with the `mcp` argument.
-- **R4.2** When `JAVA_HOME` or a variable whose name starts with `GHIDRA_` or `REA_` is set, the launcher shall pass it to the REA server's environment.
+- **R4.2** When `JAVA_HOME` or a variable whose name starts with `GHIDRA_` or `REA_` is set and setup saved no value for it, the launcher shall pass it to the REA server's environment.
 - **R4.3** The launcher shall make every skill shipped in the managed REA package available to OpenCode in its sessions only.
 - **R4.4** When setting up, the launcher shall check REA's Ghidra engine with REA's own doctor and report whether it is ready.
-- **R4.5** Where a Ghidra directory or a Java home is given to setup, the launcher shall save it in its own settings and pass it to the REA server's environment in every session in which the launcher's environment does not set that variable.
+- **R4.5** Where a Ghidra directory or a Java home is given to setup, the launcher shall save it in its own settings and pass it to the REA server's environment in every session, in place of the same variable in the launcher's environment.
+- **R4.8** If the Ghidra a setup would save, together with the Java home it would run on, is not a Ghidra release REA admits or needs a newer JDK than that Java home holds, then the launcher shall report both versions and what REA needs, save nothing and exit with a non-zero status.
+- **R4.9** When the launcher starts OpenCode with a Ghidra REA does not admit, or one on a JDK older than it needs, the launcher shall print a warning to standard error naming the versions and the setup flags that replace them.
 - **R4.6** If REA's Ghidra engine is not ready after setup, then the launcher shall report what REA says is missing and the setup flags that supply it, and finish setup without failing.
 - **R4.7** The launcher shall install the reverse-engineering instructions compiled into it as an `AGENTS.md` file in its own directory, and give that file to OpenCode as instructions in its sessions only.
 

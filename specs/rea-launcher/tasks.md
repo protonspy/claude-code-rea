@@ -58,3 +58,8 @@
 
 - [x] 7.1 (Unit) Start OpenCode with --auto unless --ask is given, and warn while approvals are automatic — R5.6, R5.7
   _Depends 5.2_
+
+## 8 · Engine compatibility
+
+- [x] 8.1 (Unit) Check the Ghidra and JDK REA runs on, refuse an incompatible pair in setup and warn at launch, and let saved engine settings win over the environment — R4.2, R4.5, R4.8, R4.9
+  _Depends 4.3_

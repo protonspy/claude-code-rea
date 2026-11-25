@@ -21,7 +21,7 @@ From the source: `go build -o rea-launcher.exe ./cmd/rea-launcher`.
 ## Setting up
 
 ```powershell
-rea-launcher setup --ghidra 'C:\Tools\ghidra_12.1.4_PUBLIC' --java-home 'C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot'
+rea-launcher setup --ghidra 'C:\Tools\ghidra_12.2_PUBLIC' --java-home 'C:\Tools\jdk-25.0.5.1+2'
 ```
 
 Setup prints one line per step:
@@ -37,8 +37,12 @@ Setup prints one line per step:
   operating system's credential store. For NEAR AI (`--provider nearai`) the key is typed at a
   hidden prompt instead.
 - **engine** — REA's own doctor on Ghidra. `--ghidra` and `--java-home` are saved in
-  `rea-launcher\engine.json` under the user configuration directory; `GHIDRA_INSTALL_DIR` and
-  `JAVA_HOME` in the environment win over them. An engine that is not ready is a warning: REA's
+  `rea-launcher\engine.json` under the user configuration directory, and win over
+  `GHIDRA_INSTALL_DIR` and `JAVA_HOME` in the environment: a `JAVA_HOME` set for every program
+  is often too old for Ghidra. Before saving, setup reads the Ghidra's
+  `Ghidra/application.properties` and the JDK's `release` file and refuses a pair REA cannot
+  run: REA 6.10.1 takes Ghidra 12.2 or a later 12.x, and Ghidra 12.2 declares JDK 25 as its
+  minimum. A session started on such a pair warns. An engine that is not ready is a warning: REA's
   JavaScript, .NET and archive tools work without one.
 
 ## Running a session

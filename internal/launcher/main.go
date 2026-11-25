@@ -107,6 +107,11 @@ func launch(ctx context.Context, args []string, sys System) int {
 		fail(sys, err)
 		return 1
 	}
+	if env, err := reaEnvironment(sys); err == nil {
+		if err := engineMismatch(sys, env); err != nil {
+			fmt.Fprintf(sys.Stderr, "rea-launcher: warning: REA's Ghidra engine will not start: %v. Run rea-launcher setup with --ghidra and --java-home.\n", err)
+		}
+	}
 	opencodeArgs := fs.Args()
 	if *ask && slices.Contains(opencodeArgs, "--auto") {
 		fmt.Fprintln(sys.Stderr, "rea-launcher: warning: --auto is passed to OpenCode, so approvals are automatic despite --ask.")
@@ -202,6 +207,24 @@ func setup(ctx context.Context, args []string, sys System) int {
 		set[name] = abs
 	}
 	if len(set) > 0 {
+		env, err := reaEnvironment(sys)
+		if err != nil {
+			step("engine", "", err)
+			return 1
+		}
+		for name, v := range set {
+			for k := range env {
+				if sys.sameVar(k, name) {
+					delete(env, k)
+				}
+			}
+			env[name] = v
+		}
+		if err := engineMismatch(sys, env); err != nil {
+			step("engine", "", fmt.Errorf("%w; nothing was saved", err))
+			fmt.Fprintf(sys.Stdout, "%20s --ghidra takes a Ghidra %d.%d or later %d.x, --java-home a JDK at least as new as that Ghidra needs\n", "", ghidraMajor, ghidraMinorFloor, ghidraMajor)
+			return 1
+		}
 		if err := saveEngineSettings(sys, set); err != nil {
 			step("engine", "", err)
 			return 1
