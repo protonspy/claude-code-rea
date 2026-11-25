@@ -29,3 +29,4 @@ The choice of harness and provider is adr:0001-use-opencode-with-nanogpt-for-abl
 - [[opencode]] — the harness: where its config lives, how it picks a model, where the key comes from, and the permission rules that gate the agent
 - [[nanogpt]] — the provider: its abliterated models with tool calling, the default model and its privacy caveats, and the OpenCode setup
 - [[near-ai]] — the private alternative: two abliterated models in attested TEEs, how to fetch and verify the attestation, and the OpenCode setup
+- [[rea-launcher]] — the one command that installs a hash-pinned OpenCode, REA and Node.js, signs in to NanoGPT, and starts a gated reverse-engineering session
