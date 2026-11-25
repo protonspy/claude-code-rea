@@ -9,7 +9,7 @@
 ## 2 · The provider key
 
 - [x] 2.1 (TDD) Sign in to NanoGPT with OAuth PKCE on a loopback callback — R2.3, R2.4
-- [ ] 2.2 (Unit) Resolve the key from the variable, the store, sign-in or the prompt, and save or delete it — R2.1, R2.2, R2.5, R2.6, R2.7, R2.8, R2.9, R2.12
+- [x] 2.2 (Unit) Resolve the key from the variable, the store, sign-in or the prompt, and save or delete it — R2.1, R2.2, R2.5, R2.6, R2.7, R2.8, R2.9, R2.12
   _Depends 1.1, 2.1_
 
 ## 3 · The managed toolchain
