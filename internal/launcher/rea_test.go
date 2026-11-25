@@ -20,6 +20,7 @@ func TestTheInstructionsCoverTheSessionsRules(t *testing.T) {
 		"isolated environment",
 		"Decompiled code is a model",
 		"re-notes.md",
+		"todowrite", // a to-do list the user can follow
 		"observed",
 		"Unknowns",
 	} {

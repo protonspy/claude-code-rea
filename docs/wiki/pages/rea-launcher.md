@@ -109,6 +109,9 @@ goes wrong when people and models reverse engineer:
   ([Basque et al.](https://adamdoupe.com/publications/decompiling-synergy-ndss2026.md)).
 - **Keep state, change approach after two failures** — agents analysing binaries lose track and
   stub what they did not read ([arXiv 2606.06838](https://arxiv.org/html/2606.06838)).
+- **A to-do list the user can follow** — OpenCode's `todowrite` list, kept for every task: in a
+  session that approves automatically it is the user's view of what was done and what is left.
+  `re-notes.md` holds the findings; the list holds the work.
 - **Verify a reconstruction by running it against the original** — recompile and re-execute
   ([LLM4Decompile](https://arxiv.org/abs/2403.05286)).
 - **The report** — answer, evidence with addresses, call path, confidence, unknowns and how to
