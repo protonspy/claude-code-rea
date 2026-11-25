@@ -25,25 +25,36 @@ func writeAgents(path string) (bool, error) {
 	if current, err := os.ReadFile(path); err == nil && bytes.Equal(current, agentsMD) {
 		return false, nil
 	}
+	if err := writeAtomic(path, agentsMD, 0o644); err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+// writeAtomic replaces path with data through a temporary file beside it, so a reader sees
+// the old content or the new, never a part.
+func writeAtomic(path string, data []byte, perm fs.FileMode) error {
 	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-		return false, err
+		return err
 	}
-	tmp, err := os.CreateTemp(filepath.Dir(path), ".AGENTS.md.*")
+	tmp, err := os.CreateTemp(filepath.Dir(path), "."+filepath.Base(path)+".*")
 	if err != nil {
-		return false, err
+		return err
 	}
-	_, err = tmp.Write(agentsMD)
+	_, err = tmp.Write(data)
 	if cerr := tmp.Close(); err == nil {
 		err = cerr
+	}
+	if err == nil {
+		err = os.Chmod(tmp.Name(), perm)
 	}
 	if err == nil {
 		err = renameRetrying(tmp.Name(), path)
 	}
 	if err != nil {
 		os.Remove(tmp.Name())
-		return false, err
 	}
-	return true, nil
+	return err
 }
 
 // installSkills copies every skill the REA package at pkg ships into skillsDir, and
@@ -136,10 +147,7 @@ func saveEngineSettings(sys System, set map[string]string) error {
 	if err != nil {
 		return err
 	}
-	if err := os.MkdirAll(sys.ConfigDir, 0o755); err != nil {
-		return err
-	}
-	return os.WriteFile(engineSettings(sys), append(data, '\n'), 0o644)
+	return writeAtomic(engineSettings(sys), append(data, '\n'), 0o600)
 }
 
 // reaEnvironment returns the environment REA's server runs with: the saved engine settings,

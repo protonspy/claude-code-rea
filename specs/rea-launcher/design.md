@@ -7,7 +7,7 @@ GitHub workflows. Why a Go launcher, a managed toolchain and the credential stor
 ruled out, is adr:0002-launch-opencode-with-rea-from-a-go-launcher.
 
 ```
-go.mod                          module github.com/protonspy/claude-code-rea
+go.mod                          module github.com/protonspy/opencode-rea
 cmd/rea-launcher/main.go        os.Exit(launcher.Main(args, launcher.DefaultSystem()))
 internal/launcher/
   main.go       subcommands and flags: launch (default) · setup · logout · version

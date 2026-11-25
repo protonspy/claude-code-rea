@@ -4,7 +4,7 @@ package main
 import (
 	"os"
 
-	"github.com/protonspy/claude-code-rea/internal/launcher"
+	"github.com/protonspy/opencode-rea/internal/launcher"
 )
 
 // version is set at release time with -ldflags "-X main.version=<tag>".

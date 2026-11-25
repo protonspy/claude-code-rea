@@ -13,7 +13,7 @@ GitHub releases, then check both the hash and the build provenance:
 ```powershell
 (Get-FileHash .\rea-launcher-v0.1.0-windows-amd64.exe -Algorithm SHA256).Hash.ToLower()
 Select-String 'windows-amd64' .\SHA256SUMS
-gh attestation verify .\rea-launcher-v0.1.0-windows-amd64.exe --repo protonspy/claude-code-rea
+gh attestation verify .\rea-launcher-v0.1.0-windows-amd64.exe --repo protonspy/opencode-rea
 ```
 
 From the source: `go build -o rea-launcher.exe ./cmd/rea-launcher`.

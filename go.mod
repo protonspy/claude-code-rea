@@ -1,4 +1,4 @@
-module github.com/protonspy/claude-code-rea
+module github.com/protonspy/opencode-rea
 
 go 1.26.4
 

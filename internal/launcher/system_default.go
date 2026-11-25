@@ -10,6 +10,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"runtime"
+	"syscall"
 	"time"
 
 	"github.com/zalando/go-keyring"
@@ -42,7 +43,7 @@ func DefaultSystem(version string) System {
 		Store:            keyringStore{service: "rea-launcher"},
 		OpenURL:          openBrowser,
 		Run:              runCommand,
-		IgnoreInterrupts: func() { signal.Ignore(os.Interrupt) },
+		IgnoreInterrupts: ignoreInterrupts,
 		Pins:             DefaultPins(),
 		AuthURL:          nanoGPTAuthURL,
 		TokenURL:         nanoGPTTokenURL,
@@ -53,6 +54,18 @@ func DefaultSystem(version string) System {
 		sys.Prompt = readSecret
 	}
 	return sys
+}
+
+// ignoreInterrupts keeps an interrupt from stopping the launcher while OpenCode runs. It
+// catches the signal rather than ignoring it: a handler is reset across exec, so OpenCode
+// starts with the default disposition, where an ignored signal would be inherited.
+func ignoreInterrupts() {
+	ch := make(chan os.Signal, 1)
+	signal.Notify(ch, os.Interrupt)
+	go func() {
+		for range ch {
+		}
+	}()
 }
 
 // readSecret reads a line from the terminal without echoing it.
@@ -75,6 +88,9 @@ func runCommand(ctx context.Context, c Command) (int, error) {
 	err := cmd.Run()
 	var exit *exec.ExitError
 	if errors.As(err, &exit) {
+		if ws, ok := exit.Sys().(syscall.WaitStatus); ok && ws.Signaled() {
+			return 128 + int(ws.Signal()), nil // the shell's convention for a death by signal
+		}
 		return exit.ExitCode(), nil
 	}
 	if err != nil {

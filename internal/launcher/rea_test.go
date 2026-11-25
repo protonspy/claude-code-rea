@@ -5,6 +5,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -73,6 +74,14 @@ func TestEngineSettingsAreSavedAndTheEnvironmentWins(t *testing.T) {
 	sys, _ := testSystem(t, "GHIDRA_INSTALL_DIR=/env/ghidra", "REA_LOG_LEVEL=debug", "PATH=/bin", "NANO_GPT_API_KEY=secret")
 	if err := saveEngineSettings(sys, map[string]string{"GHIDRA_INSTALL_DIR": "/saved/ghidra", "JAVA_HOME": "/saved/jdk"}); err != nil {
 		t.Fatal(err)
+	}
+	if runtime.GOOS != "windows" {
+		if info, err := os.Stat(engineSettings(sys)); err != nil || info.Mode().Perm() != 0o600 {
+			t.Errorf("engine.json mode: %v, %v", info, err)
+		}
+	}
+	if left, _ := filepath.Glob(filepath.Join(sys.ConfigDir, ".engine.json.*")); len(left) != 0 {
+		t.Errorf("temporary files left: %v", left)
 	}
 	env, err := reaEnvironment(sys)
 	if err != nil {

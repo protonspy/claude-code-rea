@@ -43,13 +43,19 @@ func fetch(ctx context.Context, client *http.Client, a Artifact, dir string) (st
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return "", err
 	}
+	ctx, cancel := context.WithCancelCause(ctx)
+	defer cancel(nil)
+	idle := time.AfterFunc(downloadIdleTimeout, func() {
+		cancel(fmt.Errorf("no data for %s", downloadIdleTimeout))
+	})
+	defer idle.Stop()
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, a.URL, nil)
 	if err != nil {
 		return "", err
 	}
 	resp, err := client.Do(req)
 	if err != nil {
-		return "", fmt.Errorf("download %s: %w", a.Name, err)
+		return "", fmt.Errorf("download %s: %w", a.Name, stalled(ctx, err))
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
@@ -59,13 +65,13 @@ func fetch(ctx context.Context, client *http.Client, a Artifact, dir string) (st
 	if err != nil {
 		return "", err
 	}
-	_, err = io.Copy(io.MultiWriter(part, h), resp.Body)
+	_, err = io.Copy(io.MultiWriter(part, h), idleReader{resp.Body, idle})
 	if cerr := part.Close(); err == nil {
 		err = cerr
 	}
 	if err != nil {
 		os.Remove(part.Name())
-		return "", fmt.Errorf("download %s: %w", a.Name, err)
+		return "", fmt.Errorf("download %s: %w", a.Name, stalled(ctx, err))
 	}
 	if got := algo + "-" + base64.StdEncoding.EncodeToString(h.Sum(nil)); got != a.Integrity {
 		os.Remove(part.Name())
@@ -77,6 +83,29 @@ func fetch(ctx context.Context, client *http.Client, a Artifact, dir string) (st
 		return "", err
 	}
 	return final, nil
+}
+
+// downloadIdleTimeout is how long a download may go without receiving data.
+var downloadIdleTimeout = 2 * time.Minute
+
+// idleReader restarts the idle timer on every read.
+type idleReader struct {
+	r     io.Reader
+	timer *time.Timer
+}
+
+func (i idleReader) Read(p []byte) (int, error) {
+	n, err := i.r.Read(p)
+	i.timer.Reset(downloadIdleTimeout)
+	return n, err
+}
+
+// stalled returns why ctx was cancelled when that explains err, and err otherwise.
+func stalled(ctx context.Context, err error) error {
+	if cause := context.Cause(ctx); cause != nil && !errors.Is(cause, context.Canceled) {
+		return cause
+	}
+	return err
 }
 
 // publish installs dest by filling a temporary directory beside it and renaming that into
@@ -170,7 +199,7 @@ func installREA(ctx context.Context, sys System, dir string) error {
 	pathName, pathValue := sys.pathWith(l.NodeBin())
 	code, err := sys.Run(ctx, Command{
 		Path:   l.Node(),
-		Args:   []string{l.NPM(), "install", "--prefix", dir, "--omit=dev", "--no-audit", "--no-fund", "--loglevel=error", archive},
+		Args:   []string{l.NPM(), "install", "--prefix", dir, "--omit=dev", "--no-audit", "--no-fund", "--loglevel=error", "--registry=https://registry.npmjs.org/", archive},
 		Env:    sys.environWith(map[string]string{pathName: pathValue}),
 		Stdout: sys.Stderr,
 		Stderr: sys.Stderr,

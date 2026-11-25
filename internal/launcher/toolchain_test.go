@@ -11,6 +11,7 @@ import (
 	"strings"
 	"sync/atomic"
 	"testing"
+	"time"
 )
 
 func sri512(data []byte) string {
@@ -119,5 +120,24 @@ func TestPublishLeavesAnInstalledDirectoryAlone(t *testing.T) {
 	}
 	if called {
 		t.Error("an installed component was installed again")
+	}
+}
+
+func TestAStalledDownloadIsAbandoned(t *testing.T) {
+	defer func(d time.Duration) { downloadIdleTimeout = d }(downloadIdleTimeout)
+	downloadIdleTimeout = 100 * time.Millisecond
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("part of it"))
+		w.(http.Flusher).Flush()
+		<-r.Context().Done()
+	}))
+	defer srv.Close()
+	dir := t.TempDir()
+	_, err := fetch(t.Context(), http.DefaultClient, Artifact{Name: "a", File: "a.tgz", URL: srv.URL, Integrity: sri512(nil)}, dir)
+	if err == nil || !strings.Contains(err.Error(), "no data") {
+		t.Fatalf("err = %v, want a stall", err)
+	}
+	if left, _ := os.ReadDir(dir); len(left) != 0 {
+		t.Errorf("the partial download was kept: %v", left)
 	}
 }
