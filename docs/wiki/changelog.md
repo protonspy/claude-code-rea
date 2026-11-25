@@ -9,3 +9,5 @@ change rather than left pointing at the old slug.
 
 <!-- Newest first, as `- 2026-01-14 — added [[page-slug]], folded [[other-page]]
 into it`. -->
+
+- 2026-11-25 — added [[claude-code-backend]], [[litellm-gateway]] and [[local-model-as-tool]]

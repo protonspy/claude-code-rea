@@ -15,3 +15,9 @@ fixed documents, not pages, and neither is ever an orphan.
 
 <!-- One line per page, as `- [[page-slug]] — what it covers`. Group them under
 their own headings once there are enough that a flat list stops helping. -->
+
+### Connecting Claude Code to other models
+
+- [[claude-code-backend]] — the formats Claude Code speaks, the variables that redirect it, what that does to the subscription, and why a session has one backend
+- [[litellm-gateway]] — translating Claude Code to an OpenAI-compatible API, with near.ai's abliterated DeepSeek V4.1 Flash as the worked example
+- [[local-model-as-tool]] — keeping Opus on the subscription and calling a local Ollama model through MCP, the shell or a child session

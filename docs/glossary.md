@@ -22,3 +22,9 @@ anyone in the domain.
 
 <!-- Entries go below this line. Delete the guidance above once they read for
 themselves. -->
+
+- **abliterated model** — a model whose refusal direction was removed from its weights without retraining, so it answers what the original would decline.
+- **backend** — the endpoint Claude Code sends its model requests to; Anthropic's API unless `ANTHROPIC_BASE_URL` or a cloud provider variable moves it.
+- **credential variable** — `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_API_KEY` or `apiKeyHelper`; any one of them replaces the subscription login for the whole session.
+- **gateway** — a proxy that speaks Anthropic Messages to Claude Code and calls a provider in that provider's own format; LiteLLM here. Avoid: router
+- **subscription login** — the claude.ai login Claude Code uses when no credential variable is set.
