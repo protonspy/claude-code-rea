@@ -68,7 +68,7 @@ installs them is adr:0002-launch-opencode-with-rea-from-a-go-launcher.
 The rules are the reviewed session rules of [[opencode]], plus REA's.
 
 - **R5.1** The launcher shall configure OpenCode to ask before every edit and before running any shell command other than exactly `git status`, `git diff` and `git log`.
-- **R5.2** The launcher shall configure OpenCode to deny reading `.env` files other than `.env.example`, `.pem`, `.key` and `.npmrc` files, fetching or searching the web, and touching a path outside the project other than REA's skills.
+- **R5.2** The launcher shall configure OpenCode to deny reading `.env` files other than `.env.example`, `.pem`, `.key` and `.npmrc` files, fetching or searching the web, touching a path outside the project other than REA's skills, writing REA's skills, and repeating an identical tool call in a loop.
 - **R5.3** The launcher shall configure OpenCode to allow without asking only the REA tools reviewed as static analysis — none of which runs, attaches to or drives the target, a device, a debugger, a browser, a web page or an application — and to ask before calling any other REA tool, including one the review has not seen.
 - **R5.4** The launcher shall configure OpenCode with session sharing and code search disabled.
 - **R5.5** The launcher shall start OpenCode with project configuration, Claude Code compatibility files, skills from outside the launcher's directory, self-update and language-server downloads disabled, and without the variable that enables web search.

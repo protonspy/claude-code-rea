@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 )
 
 const usageText = `Usage:
@@ -107,10 +108,13 @@ func launch(ctx context.Context, args []string, sys System) int {
 		return 1
 	}
 	opencodeArgs := fs.Args()
+	if *ask && slices.Contains(opencodeArgs, "--auto") {
+		fmt.Fprintln(sys.Stderr, "rea-launcher: warning: --auto is passed to OpenCode, so approvals are automatic despite --ask.")
+	}
 	if !*ask {
 		var auto bool
 		if opencodeArgs, auto = withAutoApproval(opencodeArgs); auto {
-			fmt.Fprintln(sys.Stderr, "rea-launcher: warning: approvals are automatic — shell commands, edits and REA's runtime tools (Frida, gdb, adb, capture) run without asking; denied actions stay denied. Run with --ask to be asked.")
+			fmt.Fprintln(sys.Stderr, "rea-launcher: warning: approvals are automatic. Shell commands, edits and REA's runtime tools (Frida, gdb, adb, capture) run without asking, and a shell command can read any file you can and reach the network: the denials cover only OpenCode's own file and web tools. Use a disposable machine with no secrets, or run with --ask.")
 		}
 	}
 	code, err := runOpenCode(ctx, sys, p, qualified, key, cfg, opencodeArgs)

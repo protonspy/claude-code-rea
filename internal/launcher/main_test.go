@@ -285,6 +285,11 @@ func TestAutomaticApprovalGoesWhereOpenCodeAcceptsIt(t *testing.T) {
 		{[]string{"run", "--auto", "x"}, []string{"run", "--auto", "x"}, true},
 		{[]string{"debug", "paths"}, []string{"debug", "paths"}, false},
 		{[]string{"mcp", "list"}, []string{"mcp", "list"}, false},
+		{[]string{"--auto"}, []string{"--auto"}, true},
+		{[]string{"run", "--auto"}, []string{"run", "--auto"}, true},
+		{[]string{"run", "explain --auto"}, []string{"run", "--auto", "explain --auto"}, true},
+		{[]string{"debug", "paths", "--auto"}, []string{"debug", "paths", "--auto"}, false},
+		{[]string{"no-such-dir"}, []string{"no-such-dir"}, false},
 	}
 	for _, c := range cases {
 		got, auto := withAutoApproval(c.in)
@@ -313,5 +318,15 @@ func TestAutomaticApprovalWarnsAndAskRestoresAsking(t *testing.T) {
 	Main([]string{"--", "debug", "paths"}, sys)
 	if strings.Join(run.args, "|") != "debug|paths" || strings.Contains(io.stderr.String(), "approvals are automatic") {
 		t.Errorf("debug: args %q, stderr:\n%s", run.args, io.stderr)
+	}
+}
+
+func TestAskWarnsWhenAutoIsPassedThrough(t *testing.T) {
+	sys, io := testSystem(t, "NANO_GPT_API_KEY=k")
+	fakeToolchain(t, &sys)
+	withOpenCode(t, &sys, 0, "")
+	Main([]string{"--ask", "--", "--auto"}, sys)
+	if !strings.Contains(io.stderr.String(), "despite --ask") {
+		t.Errorf("stderr:\n%s", io.stderr)
 	}
 }

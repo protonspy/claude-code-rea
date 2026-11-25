@@ -130,10 +130,10 @@ func TestREAToolsThatDriveSomethingAsk(t *testing.T) {
 		"rea_start_build_computer":            "ask",
 		"rea_record_build_consent":            "ask",
 		"rea_a_tool_from_a_later_rea":         "ask",
-		"edit":                                "ask",
 		"webfetch":                            "deny",
 		"websearch":                           "deny",
 		"codesearch":                          "deny",
+		"doom_loop":                           "deny",
 	}
 	for tool, want := range cases {
 		if got := decide(top, tool); got != want {
@@ -312,6 +312,21 @@ func TestEveryREAToolOutsideTheReviewAsks(t *testing.T) {
 		}
 		if got := decide(top, "rea_"+name); got != want {
 			t.Errorf("rea_%s: %q, want %q", name, got, want)
+		}
+	}
+}
+
+func TestEditsAskButREASkillsAreNeverWritten(t *testing.T) {
+	_, nested := permissionRules(t, marshalConfig(t))
+	skill := filepath.Join(testSession().SkillsDir, "reverse-engineer-anything", "SKILL.md")
+	cases := map[string]string{
+		"main.go":               "ask",
+		skill:                   "deny",
+		filepath.ToSlash(skill): "deny",
+	}
+	for path, want := range cases {
+		if got := decide(nested["edit"], path); got != want {
+			t.Errorf("edit %q: %q, want %q", path, got, want)
 		}
 	}
 }

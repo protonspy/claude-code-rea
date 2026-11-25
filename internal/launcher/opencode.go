@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"slices"
 	"strings"
 )
 
@@ -22,10 +21,9 @@ func keyVars() []string {
 // on run, after the command name; on any other command it is a parse error, so those are
 // left as they are.
 func withAutoApproval(args []string) ([]string, bool) {
-	if slices.Contains(args, "--auto") {
-		return args, true
-	}
 	switch {
+	case len(args) > 0 && args[0] == "--auto", len(args) > 1 && args[0] == "run" && args[1] == "--auto":
+		return args, true
 	case len(args) == 0 || strings.HasPrefix(args[0], "-"):
 		return append([]string{"--auto"}, args...), true
 	case args[0] == "run":
