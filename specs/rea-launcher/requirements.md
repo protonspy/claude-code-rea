@@ -2,7 +2,7 @@
 autonomy: auto
 ci: wait
 branch: feat/auto-approve
-delivery: in-review
+delivery: merged
 pr: 5
 ---
 
