@@ -9,6 +9,7 @@ change rather than left pointing at the old slug.
 
 <!-- Newest first, as `- 2026-01-14 — added [[page-slug]], folded [[other-page]]
 into it`. -->
+- 2026-11-25 — [[nanogpt]], [[rea-launcher]]: the default model is the Heretic model's `:thinking` variant
 
 - 2026-11-25 — [[rea-launcher]]: setup refuses a Ghidra and JDK REA cannot run, and its saved paths win over the environment
 - 2026-11-25 — [[rea-launcher]]: AGENTS.md asks for a to-do list the user can follow

@@ -48,7 +48,7 @@ Setup prints one line per step:
 ## Running a session
 
 ```powershell
-rea-launcher                                  # NanoGPT, the Heretic DeepSeek V4.1 Flash
+rea-launcher                                  # NanoGPT, the Heretic DeepSeek V4.1 Flash, thinking
 rea-launcher --provider nearai                # NEAR AI, in its TEE
 rea-launcher --model lyber/deepseek-v4.1-flash-1017-abliterated
 rea-launcher -- run "explain how C:\samples\app.exe checks its licence"

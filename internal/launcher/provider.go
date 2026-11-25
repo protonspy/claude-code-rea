@@ -22,7 +22,7 @@ var providers = []Provider{
 		Label:  "NanoGPT",
 		ID:     "nano-gpt",
 		KeyVar: "NANO_GPT_API_KEY",
-		Model:  "pqhaz/DeepSeek-V4.1-Flash-1017-heretic",
+		Model:  "pqhaz/DeepSeek-V4.1-Flash-1017-heretic:thinking",
 		SignIn: true,
 	},
 	{

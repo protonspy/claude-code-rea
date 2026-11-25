@@ -56,7 +56,7 @@ marked `available: false` are paused
 
 ## The default model
 
-`pqhaz/DeepSeek-V4.1-Flash-1017-heretic`, per its own catalog record:
+`pqhaz/DeepSeek-V4.1-Flash-1017-heretic:thinking`, the reasoning variant of the Heretic checkpoint, per its own catalog record:
 
 - A Heretic checkpoint of DeepSeek V4.1 Flash 1017, served by one host, **"sable"**.
 - Tool calling and optional reasoning, with efforts from `none` to `max` — but **no parallel tool
@@ -64,7 +64,8 @@ marked `available: false` are paused
 - Privacy: **zero data retention `unknown`, TEE `unknown`**, availability not verified; the host
   is marked eligible for NanoGPT's zero-retention policy.
 - Included in the PRO subscription.
-- A `:thinking` variant has the same limits and price.
+- The variant without `:thinking` has the same limits and price;
+  `rea-launcher --model pqhaz/DeepSeek-V4.1-Flash-1017-heretic` selects it.
 
 One host means no failover: when sable is down, so is the model. The next one in the table above
 is the fallback.
@@ -98,7 +99,7 @@ page spells it `NANOGPT_API_KEY`.
 ```powershell
 $env:NANO_GPT_API_KEY = [Net.NetworkCredential]::new('', (Read-Host 'NanoGPT key' -AsSecureString)).Password
 $cfg = Get-Content -Raw "$HOME\.config\opencode\abliterated.json" | ConvertFrom-Json
-$cfg | Add-Member -Force -NotePropertyName model -NotePropertyValue 'nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic'
+$cfg | Add-Member -Force -NotePropertyName model -NotePropertyValue 'nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic:thinking'
 $cfg | Add-Member -Force -NotePropertyName small_model -NotePropertyValue $cfg.model
 $env:OPENCODE_CONFIG_CONTENT = $cfg | ConvertTo-Json -Depth 10
 opencode
