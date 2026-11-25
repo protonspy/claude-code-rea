@@ -2,7 +2,8 @@
 autonomy: auto
 ci: wait
 branch: feat/rea-launcher
-delivery: in-progress
+delivery: in-review
+pr: 3
 ---
 
 # Rea launcher — requirements
