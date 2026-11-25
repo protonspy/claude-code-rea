@@ -50,7 +50,9 @@ runs in a TEE where "not even NEAR AI can see your prompts", with an attestation
 That last one is near.ai's claim, not something this repository checked. The
 base model is 284B parameters with 13B active per token
 ([NVIDIA's model reference](https://docs.api.nvidia.com/nim/reference/deepseek-ai-deepseek-v4-flash)),
-far beyond a 12 GB GPU, so hosted is the only way to run it here.
+far beyond a 12 GB GPU, so hosted is the only way to run it here. The decision record picks
+OpenCode over this route (adr:0001-use-opencode-with-nanogpt-for-abliterated-models); the same
+model in OpenCode, with no gateway, is on [[near-ai]].
 
 `config.yaml`:
 

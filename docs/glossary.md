@@ -27,4 +27,9 @@ themselves. -->
 - **backend** — the endpoint Claude Code sends its model requests to; Anthropic's API unless `ANTHROPIC_BASE_URL` or a cloud provider variable moves it.
 - **credential variable** — `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_API_KEY` or `apiKeyHelper`; any one of them replaces the subscription login for the whole session.
 - **gateway** — a proxy that speaks Anthropic Messages to Claude Code and calls a provider in that provider's own format; LiteLLM here. Avoid: router
+- **harness** — the agent program a model runs in, which gives it tools and runs its loop; Claude Code or OpenCode here.
+- **host** — the company that actually runs a model behind a provider; for an aggregator such as NanoGPT, a different company from the provider.
+- **provider** — the service whose API and key the harness uses; NanoGPT or NEAR AI here.
 - **subscription login** — the claude.ai login Claude Code uses when no credential variable is set.
+- **TEE** — a trusted execution environment: a hardware enclave whose attestation lets a client check what code serves its requests.
+- **zero data retention** — a host's stated policy of keeping no prompts or outputs after answering; a promise, where a TEE offers evidence.
