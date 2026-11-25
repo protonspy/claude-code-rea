@@ -2,8 +2,8 @@
 autonomy: auto
 ci: wait
 branch: feat/ghidra-compat
-delivery: in-progress
-pr: 5
+delivery: in-review
+pr: 7
 ---
 
 # Rea launcher — requirements
