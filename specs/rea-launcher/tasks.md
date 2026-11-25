@@ -14,7 +14,7 @@
 
 ## 3 · The managed toolchain
 
-- [ ] 3.1 (Unit) Extract zip and tar.gz archives, refusing any entry that escapes the destination — R3.4
+- [x] 3.1 (Unit) Extract zip and tar.gz archives, refusing any entry that escapes the destination — R3.4
 - [ ] 3.2 (TDD) Download an archive, verify it against its pinned hash and publish it by rename — R3.2, R3.3, R3.4, R3.5
   _Depends 3.1_
 - [ ] 3.3 (Unit) Pin and install Node.js, REA and OpenCode for the current platform — R3.1, R3.6
