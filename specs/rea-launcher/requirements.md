@@ -2,7 +2,7 @@
 autonomy: auto
 ci: wait
 branch: feat/rea-launcher
-delivery: in-review
+delivery: merged
 pr: 3
 ---
 
