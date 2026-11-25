@@ -61,6 +61,7 @@ func OpenCodeConfig(s Session) object {
 		{"model", s.Model},
 		{"small_model", s.Model},
 		{"share", "disabled"},
+		{"autoupdate", false},
 		{"instructions", []string{s.Instructions}},
 		{"mcp", object{
 			{"rea", object{
@@ -81,7 +82,7 @@ func permissions(skillsDir string) object {
 	for _, p := range uniq(filepath.Join(skillsDir, "*"), filepath.ToSlash(filepath.Join(skillsDir, "*"))) {
 		outside = append(outside, member{p, "allow"})
 	}
-	return object{
+	rules := object{
 		{"bash", object{
 			{"*", "ask"},
 			{"git status", "allow"},
@@ -100,19 +101,16 @@ func permissions(skillsDir string) object {
 		}},
 		{"webfetch", "deny"},
 		{"websearch", "deny"},
+		{"codesearch", "deny"},
 		{"external_directory", outside},
-		// REA's tools are rea_<tool>. Static analysis runs unasked; anything that drives a
-		// device, a process, a browser, a page or an application asks. Last match wins.
-		{"rea_*", "allow"},
-		{"rea_*adb*", "ask"},
-		{"rea_capture_*", "ask"},
-		{"rea_observe_*", "ask"},
-		{"rea_*web*", "ask"},
-		{"rea_*browser*", "ask"},
-		{"rea_*electron*", "ask"},
-		{"rea_*runtime*", "ask"},
-		{"rea_trace_native_*", "ask"},
 	}
+	// REA's tools are rea_<tool>. Every one asks, then the reviewed static ones are allowed
+	// by exact name, so a tool the review has not seen asks. Last match wins.
+	rules = append(rules, member{"rea_*", "ask"})
+	for _, tool := range reaStaticTools {
+		rules = append(rules, member{"rea_" + tool, "allow"})
+	}
+	return rules
 }
 
 func uniq(a, b string) []string {

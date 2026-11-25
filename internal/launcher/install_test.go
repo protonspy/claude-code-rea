@@ -42,6 +42,13 @@ func fakeToolchain(t *testing.T, sys *System) (*fileServer, *int) {
 		if !pathStartsWith(c.Env, l.NodeBin()) {
 			t.Error("the managed Node.js is not first on npm's PATH")
 		}
+		for _, kv := range c.Env {
+			for _, v := range keyVars() {
+				if strings.HasPrefix(strings.ToUpper(kv), v+"=") {
+					t.Errorf("npm and the install scripts it runs see %s", v)
+				}
+			}
+		}
 		pkg := filepath.Join(c.Args[3], "node_modules", "rea-agents")
 		for name, body := range map[string]string{
 			"scripts/rea.mjs": "rea",
@@ -69,7 +76,7 @@ func pathStartsWith(env []string, dir string) bool {
 }
 
 func TestTheToolchainIsInstalledOnceAndUsedAfterwards(t *testing.T) {
-	sys, _ := testSystem(t, "PATH=/usr/bin")
+	sys, _ := testSystem(t, "PATH=/usr/bin", "NANO_GPT_API_KEY=sk-nano-shell")
 	files, npmRuns := fakeToolchain(t, &sys)
 	if err := ensureToolchain(t.Context(), sys); err != nil {
 		t.Fatal(err)

@@ -1,0 +1,3917 @@
+[
+  {
+    "name": "act_on_build_computer",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "address_name",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "address_to_file_offset",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "analyze_function",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "analyze_javascript_application",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "analyze_swift_types",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "analyze_web_bundle",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "annotate_native_function",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "audit_release_exposure",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "batch_decompile",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "binary_overview",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "binary_session",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "build_call_path",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "build_reconstruction_obligation_ledger",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "capture_adb_screen",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "capture_browser_scenario",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": true,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "capture_electron_scenario",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": true,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "capture_native_ui_scenario",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": true,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "capture_process_scenario",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "capture_web_screenshot",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "check_build_task",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "close_binary",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "close_build_computer",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "close_frida_session",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "close_gdb_session",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "close_rizin_debug_session",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "collect_adb_bugreport",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "comment",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_application_versions",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_artifacts",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_bundles",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_functions",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_javascript_export_shapes",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_managed_members",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_process_captures",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_source_to_bundle",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_static_and_observed_endpoints",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_wasm_interfaces",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_web_captures",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "compare_web_screenshots",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "correlate_static_and_runtime",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "current_address",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "current_document",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "current_procedure",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "cutter_command",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "decode_android_resources",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "decode_interface_builder",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "decode_signal_recording",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "decompile_all",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "decompile_jeb_item",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "demangle_swift",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "discover_webmcp_tools",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "evaluate_reconstruction_coverage",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "execute_rizin_command",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "export_build_environment",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "export_environment_bundle",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": true,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "export_evidence_bundle",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": true,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "export_web_scripts",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "extract_artifact",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "extract_firmware",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "extract_uefi_firmware",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "find_changed_behavior",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "find_xrefs_to_name",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "frida_session_status",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "gdb_console",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "gdb_session_status",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "get_call_graph",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "get_evidence_bundle",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "get_navigation_context",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "get_objc_classes",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "get_objc_protocols",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "goto_address",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "guided_workflows",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "identify_flutter_build",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "import_evidence_bundle",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "import_managed_reconstruction",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inline_comment",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_adb_client",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_adb_device",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_adb_display",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_adb_package",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_adb_window",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_address_context",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_analysis_view",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_android_class",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_android_jni_bindings",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_android_method",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_android_package",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_api_contract",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_apk_signature",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_apktool_client",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_apple_ips",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_artifact",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_asset_catalog",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_binary_hardening",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_binary_layout",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_byte_entropy",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_dart_aot",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_desktop_application",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_devicetree",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_dwarf_units",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_electron_fuses",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_electron_page",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_elf_debug_link",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_elf_dependencies",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_elf_notes",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_elf_unwind_ranges",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_erlang_beam",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_evm_interface",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_firmware_regions",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_go_binary",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_gpu_code_objects",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_il2cpp_metadata",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_jeb_client",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_kernel_build_config",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_kernel_module",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_keyed_archive",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_macho",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_managed_artifact",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_managed_members",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_managed_native_boundaries",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_maven_gradle_metadata",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_model_artifact",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_native_api",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "inspect_native_data_type",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_native_dispatch_metadata",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_native_exports",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_native_initializers",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_native_instruction",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_native_load_image",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_ntfs_journal",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_nuget_nupkg",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_packet_capture",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_packet_fields",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_pcap_capture",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_pcap_client",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_pe_certificates",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_pe_imports",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_pe_load_config",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_pe_resources",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_playwright_trace",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_plist",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_python_pyc",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_recorded_crash",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_rust_binary",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_signal_decoders",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_signature",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_sqlite_database",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_uefi_firmware",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_uefi_nvram",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_v8_code_cache",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_wasm_artifact",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_web_event_listeners",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_web_network_capture",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_web_page",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_windows_shortcut",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "inspect_with_objdump",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "install_adb_package",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": true,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "instrument_with_frida",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "list_adb_devices",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_adb_directory",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_adb_features",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_adb_packages",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_adb_processes",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_adb_services",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_architectures",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_bookmarks",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_browser_targets",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_cutter_sessions",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_documents",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_electron_targets",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_frida_devices",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_frida_processes",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_javascript_runtime_targets",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_jeb_units",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_names",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_procedures",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_segments",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_strings",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "list_unknowns",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "load_frida_script",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "mark_build_checkpoint",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "match_native_functions",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "measure_build_task",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "next_address",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "observe_javascript_runtime",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "observe_native_calls",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "observe_native_ui",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "observe_web_execution",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "observe_web_session",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "open_binary",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "open_bundle_resources",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "open_jeb_project",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "prev_address",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "procedure_address",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "procedure_assembly",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "procedure_callees",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "procedure_callers",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "procedure_info",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "procedure_pseudo_code",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "procedure_references",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "project_android_application_graph",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "project_apple_application_graph",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "project_harmony_application_graph",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "project_managed_application_graph",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "pull_adb_file",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "pull_adb_package",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "push_adb_file",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": true,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "read_adb_logcat",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "read_adb_setting",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "read_bytes",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "read_function_instructions",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "read_guidance_section",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "reconcile_javascript_runtime",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "record_build_consent",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "record_unknown",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "recover_javascript_sources",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "reset_investigation",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": false,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "resolve_adb_packages",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "resolve_containing_procedure",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "resolve_native_call_targets",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "resume_frida_session",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "rizin_debug_command",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": true,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "rizin_debug_session_status",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "search_android_classes",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "search_bytes",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "search_guidance",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "search_procedures",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "search_strings",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "set_address_name",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "set_addresses_names",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "set_bookmark",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "set_comment",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "set_inline_comment",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "start_adb_activity",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": true,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "start_adb_app",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": true,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "start_build_capture",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "start_build_computer",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "start_frida_session",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "start_gdb_session",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "start_rizin_debug_session",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": true,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "stop_adb_app",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": true,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "stop_build_capture",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "trace_android_references",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "trace_application_feature",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "trace_call_path",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "trace_dylib_resolution",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "trace_feature",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "trace_javascript_semantics",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "trace_native_ui_action",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "trace_native_values",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": true,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "trace_web_module_imports",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "trace_web_source_location",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "uninstall_adb_package",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": true,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "unload_frida_script",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "unset_bookmark",
+    "effects": {
+      "mutatesTarget": true,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": true,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "update_unknown",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": false
+    }
+  },
+  {
+    "name": "verify_managed_native_boundaries",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "verify_reconstruction",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "verify_unknown_resolution",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": false,
+      "writesFilesystem": false,
+      "launchesProcess": false,
+      "accessesNetwork": false,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  },
+  {
+    "name": "xrefs",
+    "effects": {
+      "mutatesTarget": false,
+      "mutatesSession": true,
+      "writesFilesystem": true,
+      "launchesProcess": true,
+      "accessesNetwork": true,
+      "changesUiState": false,
+      "mayDiscardData": false,
+      "executesForeignCode": false,
+      "mutatesDevice": false,
+      "idempotent": true
+    }
+  }
+]

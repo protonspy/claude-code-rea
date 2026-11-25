@@ -1,6 +1,6 @@
 module github.com/protonspy/opencode-rea
 
-go 1.26.4
+go 1.26.11
 
 require (
 	github.com/zalando/go-keyring v0.2.8

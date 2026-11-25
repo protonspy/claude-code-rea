@@ -31,7 +31,8 @@ installs them is adr:0002-launch-opencode-with-rea-from-a-go-launcher.
 - **R2.1** When the provider's key variable is set, the launcher shall use its value as the key.
 - **R2.2** When the provider's key variable is unset and the credential store holds a key for the provider, the launcher shall use the stored key.
 - **R2.3** When NanoGPT is the provider and no key is available, the launcher shall obtain one through NanoGPT's OAuth PKCE sign-in, receiving the callback on a loopback address, opening the sign-in page in the browser and printing its URL to standard error.
-- **R2.4** If the OAuth callback's state differs from the one sent, NanoGPT reports an error, the code exchange fails, or no callback arrives within five minutes, then the launcher shall exit with an error, without starting OpenCode.
+- **R2.4** If a callback carrying the sign-in's state reports an error, the code exchange fails, or no such callback arrives within five minutes, then the launcher shall exit with an error, without starting OpenCode.
+- **R2.14** If a request reaches the sign-in's callback without the state sent, with another method than GET or under another host name than the loopback address, then the launcher shall refuse it and keep waiting.
 - **R2.5** When NEAR AI is the provider, no key is available and standard input is a terminal, the launcher shall prompt for the key without echoing it.
 - **R2.6** If NEAR AI is the provider, no key is available and standard input is not a terminal, then the launcher shall exit with an error naming the variable, without starting OpenCode.
 - **R2.7** If the key entered at the prompt is empty, then the launcher shall exit with an error, without starting OpenCode.
@@ -40,6 +41,7 @@ installs them is adr:0002-launch-opencode-with-rea-from-a-go-launcher.
 - **R2.10** The launcher shall pass the key to OpenCode through the provider's key variable and through no other channel.
 - **R2.11** The launcher shall not write the key to a file, to a command line, to the OpenCode configuration or to its own output.
 - **R2.12** If the credential store cannot be reached, then the launcher shall warn on standard error and use the key for the current run only.
+- **R2.13** The launcher shall keep every provider's key variable out of the environment of npm and blank it in the environment of REA's server, so neither the install scripts nor a target REA runs can read a key.
 
 ## R3 · The managed toolchain
 
@@ -66,8 +68,9 @@ The rules are the reviewed session rules of [[opencode]], plus REA's.
 
 - **R5.1** The launcher shall configure OpenCode to ask before every edit and before running any shell command other than exactly `git status`, `git diff` and `git log`.
 - **R5.2** The launcher shall configure OpenCode to deny reading `.env` files other than `.env.example`, `.pem`, `.key` and `.npmrc` files, fetching or searching the web, and touching a path outside the project other than REA's skills.
-- **R5.3** The launcher shall configure OpenCode to ask before calling an REA tool that drives a device, a process, a browser, a web page or a running application, and to allow REA's other tools without asking.
-- **R5.4** The launcher shall configure OpenCode with session sharing disabled.
+- **R5.3** The launcher shall configure OpenCode to allow without asking only the REA tools reviewed as static analysis — none of which runs, attaches to or drives the target, a device, a debugger, a browser, a web page or an application — and to ask before calling any other REA tool, including one the review has not seen.
+- **R5.4** The launcher shall configure OpenCode with session sharing and code search disabled.
+- **R5.5** The launcher shall start OpenCode with project configuration, Claude Code compatibility files, skills from outside the launcher's directory, self-update and language-server downloads disabled, and without the variable that enables web search.
 
 ## R6 · Running OpenCode
 

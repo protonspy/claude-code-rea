@@ -3,6 +3,7 @@ package launcher
 import (
 	"bytes"
 	"encoding/json"
+	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -120,9 +121,19 @@ func TestREAToolsThatDriveSomethingAsk(t *testing.T) {
 		"rea_observe_javascript_runtime":      "ask",
 		"rea_list_javascript_runtime_targets": "ask",
 		"rea_trace_native_ui_action":          "ask",
+		"rea_gdb_console":                     "ask",
+		"rea_start_gdb_session":               "ask",
+		"rea_start_frida_session":             "ask",
+		"rea_instrument_with_frida":           "ask",
+		"rea_execute_rizin_command":           "ask",
+		"rea_cutter_command":                  "ask",
+		"rea_start_build_computer":            "ask",
+		"rea_record_build_consent":            "ask",
+		"rea_a_tool_from_a_later_rea":         "ask",
 		"edit":                                "ask",
 		"webfetch":                            "deny",
 		"websearch":                           "deny",
+		"codesearch":                          "deny",
 	}
 	for tool, want := range cases {
 		if got := decide(top, tool); got != want {
@@ -233,5 +244,74 @@ func TestEmptyREAEnvironmentIsAnObject(t *testing.T) {
 	}
 	if !bytes.Contains(cfg, []byte(`"environment":{}`)) {
 		t.Errorf("environment is not an empty object in %s", cfg)
+	}
+}
+
+// reaTool is one tool of the REA snapshot, with the effects REA declares for it.
+type reaTool struct {
+	Name    string `json:"name"`
+	Effects struct {
+		ExecutesForeignCode bool `json:"executesForeignCode"`
+		MutatesDevice       bool `json:"mutatesDevice"`
+		ChangesUIState      bool `json:"changesUiState"`
+	} `json:"effects"`
+}
+
+func reaSnapshot(t *testing.T) map[string]reaTool {
+	t.Helper()
+	data, err := os.ReadFile(filepath.Join("testdata", "rea-"+REAVersion+"-tools.json"))
+	if err != nil {
+		t.Fatalf("no snapshot of REA %s's tools: %v", REAVersion, err)
+	}
+	var tools []reaTool
+	if err := json.Unmarshal(data, &tools); err != nil {
+		t.Fatal(err)
+	}
+	byName := map[string]reaTool{}
+	for _, tool := range tools {
+		byName[tool.Name] = tool
+	}
+	return byName
+}
+
+// engineBacked are static tools REA flags as running foreign code or changing UI state
+// because the analysis engine — Ghidra, Hopper — runs its own scripts or moves its own
+// cursor. The target does not run.
+var engineBacked = map[string]bool{
+	"analyze_function": true, "batch_decompile": true, "decompile_all": true, "goto_address": true,
+	"inspect_native_api": true, "procedure_assembly": true, "procedure_pseudo_code": true,
+	"read_function_instructions": true, "trace_native_values": true,
+}
+
+func TestTheStaticToolsAreREAsAndRunNothing(t *testing.T) {
+	snapshot := reaSnapshot(t)
+	runtime := regexp.MustCompile(`adb|frida|gdb|rizin|cutter|capture_|observe_|browser|electron_page|runtime_target|build_computer|build_capture|build_task|build_consent|ui_action|webmcp|web_page`)
+	for _, name := range reaStaticTools {
+		tool, ok := snapshot[name]
+		switch {
+		case !ok:
+			t.Errorf("%s is not a REA %s tool", name, REAVersion)
+		case runtime.MatchString(name):
+			t.Errorf("%s drives something at runtime and must ask", name)
+		case (tool.Effects.ExecutesForeignCode || tool.Effects.MutatesDevice || tool.Effects.ChangesUIState) && !engineBacked[name]:
+			t.Errorf("%s declares runtime effects %+v and is not a reviewed engine-backed tool", name, tool.Effects)
+		}
+	}
+}
+
+func TestEveryREAToolOutsideTheReviewAsks(t *testing.T) {
+	top, _ := permissionRules(t, marshalConfig(t))
+	static := map[string]bool{}
+	for _, name := range reaStaticTools {
+		static[name] = true
+	}
+	for name := range reaSnapshot(t) {
+		want := "ask"
+		if static[name] {
+			want = "allow"
+		}
+		if got := decide(top, "rea_"+name); got != want {
+			t.Errorf("rea_%s: %q, want %q", name, got, want)
+		}
 	}
 }

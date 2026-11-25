@@ -27,7 +27,10 @@ func TestTheLayoutFollowsEachPlatformsArchive(t *testing.T) {
 }
 
 func TestTheDefaultSystemUsesTheUserDirectoriesAndThePins(t *testing.T) {
-	sys := DefaultSystem("v1")
+	sys, err := DefaultSystem("v1")
+	if err != nil {
+		t.Fatal(err)
+	}
 	if filepath.Base(sys.Root) != "rea-launcher" || filepath.Base(sys.ConfigDir) != "rea-launcher" {
 		t.Errorf("root %q, config %q", sys.Root, sys.ConfigDir)
 	}
@@ -68,7 +71,7 @@ func TestAnExchangeWithoutAKeyFails(t *testing.T) {
 }
 
 func TestACallbackWithoutACodeFails(t *testing.T) {
-	if res := readCallback(map[string][]string{"state": {"s"}}, "s"); res.err == nil {
+	if res := readCallback(map[string][]string{"state": {"s"}}); res.err == nil {
 		t.Error("want an error")
 	}
 }
@@ -176,5 +179,54 @@ func TestPublishReportsAFillThatCannotStart(t *testing.T) {
 	os.WriteFile(file, nil, 0o644)
 	if err := publish(filepath.Join(file, "sub", "dest"), func(string) error { return nil }); err == nil {
 		t.Error("want an error when the parent cannot be made")
+	}
+}
+
+func TestAnAGENTSmdThatCannotBeWrittenStopsTheLaunch(t *testing.T) {
+	sys, io := testSystem(t, "NANO_GPT_API_KEY=k")
+	fakeToolchain(t, &sys)
+	run := withOpenCode(t, &sys, 0, "")
+	os.MkdirAll(filepath.Join(sys.layout().Agents(), "in-the-way"), 0o755)
+	if code := Main(nil, sys); code != 1 || !strings.Contains(io.stderr.String(), "AGENTS.md") {
+		t.Errorf("exit %d, stderr:\n%s", code, io.stderr)
+	}
+	if run.ran {
+		t.Error("OpenCode started without its instructions")
+	}
+}
+
+func TestExtractionIntoNothingOrOverADirectoryFails(t *testing.T) {
+	missing := filepath.Join(t.TempDir(), "absent")
+	if err := extract(writeTemp(t, "a.zip", zipBytes(t, entry{name: "top/a", body: "x"})), formatZip, missing, 1); err == nil {
+		t.Error("extract into a missing destination: want an error")
+	}
+	cases := map[string][]byte{
+		formatZip:   zipBytes(t, entry{name: "top/x/"}, entry{name: "top/x", body: "file over a directory"}),
+		formatTarGz: tgzBytes(t, entry{name: "package/x/", dir: true}, entry{name: "package/x", body: "file over a directory"}),
+	}
+	for format, data := range cases {
+		if err := extract(writeTemp(t, "a", data), format, t.TempDir(), 1); err == nil {
+			t.Errorf("%s: a file entry over a directory entry: want an error", format)
+		}
+	}
+	if err := extract(writeTemp(t, "a", []byte("not an archive")), formatTarGz, t.TempDir(), 1); err == nil {
+		t.Error("a corrupt tar.gz: want an error")
+	}
+	if err := extract(writeTemp(t, "a", []byte("not an archive")), formatZip, t.TempDir(), 1); err == nil {
+		t.Error("a corrupt zip: want an error")
+	}
+}
+
+func TestSkillsWithNowhereToGoFail(t *testing.T) {
+	pkg := t.TempDir()
+	os.MkdirAll(filepath.Join(pkg, "skills", "a"), 0o755)
+	os.WriteFile(filepath.Join(pkg, "skills", "a", "SKILL.md"), []byte("a"), 0o644)
+	blocked := filepath.Join(t.TempDir(), "file")
+	os.WriteFile(blocked, nil, 0o644)
+	if _, err := installSkills(pkg, filepath.Join(blocked, "skills")); err == nil {
+		t.Error("want an error when the skills directory cannot be made")
+	}
+	if _, err := installSkills(filepath.Join(t.TempDir(), "no-package"), t.TempDir()); err == nil {
+		t.Error("want an error for a package that is not there")
 	}
 }

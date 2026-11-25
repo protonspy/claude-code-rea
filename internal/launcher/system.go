@@ -75,8 +75,8 @@ func (s System) sameVar(a, b string) bool {
 func (s System) layout() Layout { return Layout{Root: s.Root, OS: s.Platform.OS} }
 
 // environWith returns the launcher's environment with set's variables replacing any of
-// the same name.
-func (s System) environWith(set map[string]string) []string {
+// the same name, and without the variables named in drop.
+func (s System) environWith(set map[string]string, drop ...string) []string {
 	out := make([]string, 0, len(s.Environ)+len(set))
 	for _, kv := range s.Environ {
 		k, _, _ := strings.Cut(kv, "=")
@@ -85,6 +85,11 @@ func (s System) environWith(set map[string]string) []string {
 			if s.sameVar(k, name) {
 				replaced = true
 				break
+			}
+		}
+		for _, name := range drop {
+			if s.sameVar(k, name) {
+				replaced = true
 			}
 		}
 		if !replaced {

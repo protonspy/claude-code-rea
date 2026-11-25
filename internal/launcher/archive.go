@@ -22,20 +22,27 @@ const (
 )
 
 // extract unpacks the archive at src into dest, dropping the first strip components of
-// every entry's path. An entry that would land outside dest is an error, not a skip.
+// every entry's path. An entry that would land outside dest is an error, not a skip. Every
+// write goes through an os.Root on dest, so not even a chain of links the archive itself
+// created can lead a later entry outside it.
 func extract(src, format, dest string, strip int) error {
+	root, err := os.OpenRoot(dest)
+	if err != nil {
+		return err
+	}
+	defer root.Close()
 	switch format {
 	case formatZip:
-		return extractZip(src, dest, strip)
+		return extractZip(src, root, strip)
 	case formatTarGz:
-		return extractTarGz(src, dest, strip)
+		return extractTarGz(src, root, strip)
 	}
 	return fmt.Errorf("unknown archive format %q", format)
 }
 
-// entryPath returns where an archive entry named name goes under dest, or "" for an entry
-// that strip leaves nothing of.
-func entryPath(dest, name string, strip int) (string, error) {
+// entryPath returns where an archive entry named name goes, relative to the destination,
+// or "" for an entry that strip leaves nothing of.
+func entryPath(name string, strip int) (string, error) {
 	if strings.Contains(name, `\`) || path.IsAbs(name) || slices.Contains(strings.Split(name, "/"), "..") {
 		return "", fmt.Errorf("archive entry %q escapes the destination", name)
 	}
@@ -47,27 +54,27 @@ func entryPath(dest, name string, strip int) (string, error) {
 	if !filepath.IsLocal(rel) {
 		return "", fmt.Errorf("archive entry %q escapes the destination", name)
 	}
-	return filepath.Join(dest, rel), nil
+	return rel, nil
 }
 
-func extractZip(src, dest string, strip int) error {
+func extractZip(src string, root *os.Root, strip int) error {
 	r, err := zip.OpenReader(src)
 	if err != nil {
 		return err
 	}
 	defer r.Close()
 	for _, f := range r.File {
-		target, err := entryPath(dest, f.Name, strip)
-		if err != nil || target == "" {
-			if err != nil {
-				return err
-			}
+		rel, err := entryPath(f.Name, strip)
+		if err != nil {
+			return err
+		}
+		if rel == "" {
 			continue
 		}
 		mode := f.Mode()
 		switch {
 		case mode.IsDir():
-			if err := os.MkdirAll(target, 0o755); err != nil {
+			if err := root.MkdirAll(rel, 0o755); err != nil {
 				return err
 			}
 		case mode&fs.ModeSymlink != 0:
@@ -77,7 +84,7 @@ func extractZip(src, dest string, strip int) error {
 			if err != nil {
 				return err
 			}
-			err = writeFile(target, rc, mode.Perm())
+			err = writeRooted(root, rel, rc, mode.Perm())
 			rc.Close()
 			if err != nil {
 				return err
@@ -87,7 +94,7 @@ func extractZip(src, dest string, strip int) error {
 	return nil
 }
 
-func extractTarGz(src, dest string, strip int) error {
+func extractTarGz(src string, root *os.Root, strip int) error {
 	f, err := os.Open(src)
 	if err != nil {
 		return err
@@ -107,42 +114,58 @@ func extractTarGz(src, dest string, strip int) error {
 		if err != nil {
 			return err
 		}
-		target, err := entryPath(dest, h.Name, strip)
+		rel, err := entryPath(h.Name, strip)
 		if err != nil {
 			return err
 		}
-		if target == "" {
+		if rel == "" {
 			continue
 		}
 		switch h.Typeflag {
 		case tar.TypeDir:
-			if err := os.MkdirAll(target, 0o755); err != nil {
+			if err := root.MkdirAll(rel, 0o755); err != nil {
 				return err
 			}
 		case tar.TypeReg:
-			if err := writeFile(target, tr, fs.FileMode(h.Mode).Perm()); err != nil {
+			if err := writeRooted(root, rel, tr, fs.FileMode(h.Mode).Perm()); err != nil {
 				return err
 			}
 		case tar.TypeSymlink:
-			if err := symlink(dest, target, h.Name, h.Linkname); err != nil {
+			if err := symlink(root, rel, h.Name, h.Linkname); err != nil {
 				return err
 			}
 		}
 	}
 }
 
-// symlink creates target pointing at linkname, which must be relative and resolve inside dest.
-func symlink(dest, target, name, linkname string) error {
-	resolved := filepath.Join(filepath.Dir(target), filepath.FromSlash(linkname))
-	rel, err := filepath.Rel(dest, resolved)
+// symlink creates rel pointing at linkname, which must be relative and, read as written,
+// resolve inside the root.
+func symlink(root *os.Root, rel, name, linkname string) error {
+	resolved := filepath.Join(filepath.Dir(rel), filepath.FromSlash(linkname))
 	rooted := path.IsAbs(linkname) || filepath.IsAbs(linkname) || filepath.VolumeName(linkname) != "" || strings.HasPrefix(linkname, `\`)
-	if err != nil || rooted || !filepath.IsLocal(rel) {
+	if rooted || !filepath.IsLocal(resolved) {
 		return fmt.Errorf("archive entry %q links outside the destination, to %q", name, linkname)
 	}
-	if err := os.MkdirAll(filepath.Dir(target), 0o755); err != nil {
+	if err := root.MkdirAll(filepath.Dir(rel), 0o755); err != nil {
 		return err
 	}
-	return os.Symlink(linkname, target)
+	return root.Symlink(linkname, rel)
+}
+
+// writeRooted writes r to rel inside root.
+func writeRooted(root *os.Root, rel string, r io.Reader, perm fs.FileMode) error {
+	if err := root.MkdirAll(filepath.Dir(rel), 0o755); err != nil {
+		return err
+	}
+	out, err := root.OpenFile(rel, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, perm|0o600)
+	if err != nil {
+		return err
+	}
+	if _, err := io.Copy(out, r); err != nil {
+		out.Close()
+		return err
+	}
+	return out.Close()
 }
 
 func writeFile(target string, r io.Reader, perm fs.FileMode) error {

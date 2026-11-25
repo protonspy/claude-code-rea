@@ -60,8 +60,8 @@ Ruled out:
 
 ## Consequences
 
-- **Updating REA, OpenCode or Node.js is a release of the launcher.** New pins, new hashes, and a
-  fresh look at the REA tools the permission rules name.
+- **Updating REA, OpenCode or Node.js is a release of the launcher.** New pins, new hashes, and for
+  REA a new snapshot of its tool catalog and a new review of the static tools allowed unasked.
 - **The key is at rest.** Encrypted by the operating system for the user, but any process of the
   user can ask for it — as it could read the environment variable before. The spend cap set at
   NanoGPT's consent screen is what bounds a leak; `rea-launcher logout` deletes the stored key,

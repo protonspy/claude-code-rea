@@ -44,7 +44,7 @@ func withOpenCode(t *testing.T, sys *System, code int, doctor string) *opencodeR
 }
 
 func TestLaunchRunsOpenCodeWithTheSessionAndTheKey(t *testing.T) {
-	sys, io := testSystem(t, "NANO_GPT_API_KEY=sk-nano-secret", "OPENCODE_CONFIG_CONTENT={}", "PATH=/bin")
+	sys, io := testSystem(t, "NANO_GPT_API_KEY=sk-nano-secret", "OPENCODE_CONFIG_CONTENT={}", "OPENCODE_ENABLE_EXA=1", "PATH=/bin")
 	fakeToolchain(t, &sys)
 	run := withOpenCode(t, &sys, 7, "")
 	ignored := false
@@ -73,6 +73,27 @@ func TestLaunchRunsOpenCodeWithTheSessionAndTheKey(t *testing.T) {
 	}
 	if !ignored {
 		t.Error("interrupts were not left to OpenCode")
+	}
+	for _, name := range []string{"OPENCODE_DISABLE_PROJECT_CONFIG", "OPENCODE_DISABLE_CLAUDE_CODE", "OPENCODE_DISABLE_EXTERNAL_SKILLS", "OPENCODE_DISABLE_AUTOUPDATE", "OPENCODE_DISABLE_LSP_DOWNLOAD"} {
+		if got := run.env[name]; len(got) != 1 || got[0] != "1" {
+			t.Errorf("%s = %q, want 1: the session directory may hold the target", name, got)
+		}
+	}
+	if _, ok := run.env["OPENCODE_ENABLE_EXA"]; ok {
+		t.Error("OPENCODE_ENABLE_EXA reached OpenCode, which turns its web search back on")
+	}
+	var rea struct {
+		MCP struct {
+			REA struct {
+				Environment map[string]*string `json:"environment"`
+			} `json:"rea"`
+		} `json:"mcp"`
+	}
+	json.Unmarshal([]byte(cfg[0]), &rea)
+	for _, v := range keyVars() {
+		if got := rea.MCP.REA.Environment[v]; got == nil || *got != "" {
+			t.Errorf("REA's environment does not blank %s, so a target REA runs inherits the key", v)
+		}
 	}
 	if !strings.Contains(io.stderr.String(), "NanoGPT") || !strings.Contains(io.stderr.String(), "DeepSeek-V4.1-Flash-1017-heretic") {
 		t.Errorf("stderr does not name the provider and model:\n%s", io.stderr)

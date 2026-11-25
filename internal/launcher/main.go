@@ -118,6 +118,11 @@ func sessionConfig(sys System, model string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	// OpenCode starts REA with its own environment plus this one, and REA starts the
+	// targets it runs from its own: blank the keys so neither sees them.
+	for _, v := range keyVars() {
+		env[v] = ""
+	}
 	l := sys.layout()
 	return json.Marshal(OpenCodeConfig(Session{
 		Model:        model,

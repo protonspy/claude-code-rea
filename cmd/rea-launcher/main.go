@@ -2,6 +2,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/protonspy/opencode-rea/internal/launcher"
@@ -11,5 +12,10 @@ import (
 var version = "dev"
 
 func main() {
-	os.Exit(launcher.Main(os.Args[1:], launcher.DefaultSystem(version)))
+	sys, err := launcher.DefaultSystem(version)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "rea-launcher: %v\n", err)
+		os.Exit(1)
+	}
+	os.Exit(launcher.Main(os.Args[1:], sys))
 }

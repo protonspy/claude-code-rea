@@ -120,15 +120,58 @@ func TestSignInReturnsTheExchangedKey(t *testing.T) {
 	}
 }
 
-func TestSignInRejectsAForeignState(t *testing.T) {
+func TestForeignCallbacksAreRefusedAndTheSignInWaits(t *testing.T) {
 	f := &fakeNanoGPT{code: "c1", key: "sk-nano-test"}
 	srv := httptest.NewServer(f)
 	defer srv.Close()
 	var opened url.URL
 	var stderr bytes.Buffer
-	_, err := newOAuth(srv.URL, browser(t, f, &opened, url.Values{"code": {"c1"}, "state": {"forged"}}), &stderr).SignIn(t.Context())
-	if err == nil || !strings.Contains(err.Error(), "state") {
-		t.Fatalf("err = %v, want a state mismatch", err)
+	genuine := browser(t, f, &opened, url.Values{"code": {"c1"}})
+	open := func(raw string) error {
+		u, _ := url.Parse(raw)
+		cb := u.Query().Get("callback_url")
+		state := u.Query().Get("state")
+		forged := []*http.Request{}
+		r, _ := http.NewRequest(http.MethodGet, cb+"?code=evil&state=forged", nil)
+		forged = append(forged, r)
+		r, _ = http.NewRequest(http.MethodGet, cb+"?error=access_denied&state=", nil)
+		forged = append(forged, r)
+		r, _ = http.NewRequest(http.MethodGet, cb+"?code=evil&state="+state, nil)
+		r.Host = "rebound.example" // DNS rebinding reaches the port under another name
+		forged = append(forged, r)
+		r, _ = http.NewRequest(http.MethodPost, cb+"?code=evil&state="+state, nil)
+		forged = append(forged, r)
+		for _, req := range forged {
+			resp, err := http.DefaultClient.Do(req)
+			if err != nil {
+				t.Fatal(err)
+			}
+			resp.Body.Close()
+			if resp.StatusCode != http.StatusBadRequest {
+				t.Errorf("%s %s (Host %s): HTTP %d, want 400", req.Method, req.URL, req.Host, resp.StatusCode)
+			}
+		}
+		return genuine(raw)
+	}
+	key, err := newOAuth(srv.URL, open, &stderr).SignIn(t.Context())
+	if err != nil || key != "sk-nano-test" {
+		t.Fatalf("key %q, err %v: a foreign callback ended the sign-in", key, err)
+	}
+	if f.calls.Load() != 1 {
+		t.Errorf("%d exchanges, want only the genuine code's", f.calls.Load())
+	}
+}
+
+func TestOnlyForeignCallbacksTimeOutWithoutAnExchange(t *testing.T) {
+	f := &fakeNanoGPT{code: "c1", key: "sk-nano-test"}
+	srv := httptest.NewServer(f)
+	defer srv.Close()
+	var opened url.URL
+	var stderr bytes.Buffer
+	o := newOAuth(srv.URL, browser(t, f, &opened, url.Values{"code": {"c1"}, "state": {"forged"}}), &stderr)
+	o.Timeout = 200 * time.Millisecond
+	if _, err := o.SignIn(t.Context()); err == nil {
+		t.Fatal("want a timeout")
 	}
 	if f.calls.Load() != 0 {
 		t.Error("a forged callback's code was exchanged")

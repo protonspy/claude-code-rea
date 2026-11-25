@@ -61,10 +61,17 @@ not in the folder that holds the target or anything secret. It gets:
 - the reviewed permission rules of [[opencode]] — every edit and shell command but `git status`,
   `git diff` and `git log` asks, key files and the web are denied, and nothing outside the
   project is reachable but REA's skills;
-- REA's tools, of which those that start, attach to or drive a device, process, browser, page or
-  application ask, and the static ones run;
+- REA's tools: 180 reviewed as static analysis run unasked; the rest — Frida, gdb, Rizin, Cutter,
+  adb, the desktop-build computer, browser, page and runtime capture — ask, as does any tool a
+  later REA adds;
 - `AGENTS.md`, below;
-- session sharing off, and the small model pinned to the main one.
+- session sharing and code search off, and the small model pinned to the main one;
+- nothing from the session directory: no project `opencode.json`, no `.opencode/` plugin, no
+  `CLAUDE.md`, no skill from outside the launcher's own directory, no self-update.
+
+The key is in OpenCode's environment, and so in that of its shell commands and language servers.
+REA gets the variable blanked, so the targets REA runs do not inherit it, and npm installs REA
+without it.
 
 When a prompt comes, read the whole command, answer `once`, and reject anything that sends data
 to an address or reads credentials.
@@ -102,4 +109,7 @@ goes wrong when people and models reverse engineer:
 Every pin is in `internal/launcher/pins.go`, with the source of its hash beside it. A new pin is
 a new release of the launcher: Node.js from `SHASUMS256.txt`; OpenCode's six platform packages
 and REA from the npm registry's `dist.integrity`, and REA's against its provenance attestation;
-then re-read REA's tool names against the ask-list in `internal/launcher/config.go`.
+then regenerate `internal/launcher/testdata/rea-<version>-tools.json` from the new REA's
+`dist/contracts/*ToolContracts.js` and review `internal/launcher/rea_tools.go`, the static tools
+allowed unasked, against it — `TestTheStaticToolsAreREAsAndRunNothing` fails on a tool that is gone
+or declares runtime effects.

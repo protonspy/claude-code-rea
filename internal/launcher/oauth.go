@@ -59,9 +59,18 @@ func (o OAuth) SignIn(ctx context.Context) (string, error) {
 
 	results := make(chan callback, 1)
 	mux := http.NewServeMux()
+	host := ln.Addr().String()
 	mux.HandleFunc("/callback", func(w http.ResponseWriter, r *http.Request) {
-		res := readCallback(r.URL.Query(), state)
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		// Any local process or web page can reach this port. A request that is not the
+		// browser coming back from this sign-in is refused and the sign-in keeps waiting,
+		// so it cannot end the sign-in either.
+		if r.Method != http.MethodGet || r.Host != host || !sameState(r.URL.Query(), state) {
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintln(w, "rea-launcher: not a callback from this sign-in")
+			return
+		}
+		res := readCallback(r.URL.Query())
 		if res.err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintf(w, "rea-launcher: sign-in failed: %v\n", res.err)
@@ -111,11 +120,13 @@ func (o OAuth) SignIn(ctx context.Context) (string, error) {
 	return o.exchange(ctx, res.code, verifier)
 }
 
-// readCallback checks the callback's query against the state the sign-in sent.
-func readCallback(q url.Values, state string) callback {
-	if subtle.ConstantTimeCompare([]byte(q.Get("state")), []byte(state)) != 1 {
-		return callback{err: errors.New("the sign-in callback carried a different state; it was not from this sign-in")}
-	}
+// sameState reports whether the callback carries the state the sign-in sent.
+func sameState(q url.Values, state string) bool {
+	return subtle.ConstantTimeCompare([]byte(q.Get("state")), []byte(state)) == 1
+}
+
+// readCallback reads the outcome of a callback that carried this sign-in's state.
+func readCallback(q url.Values) callback {
 	if e := q.Get("error"); e != "" {
 		return callback{err: fmt.Errorf("NanoGPT refused the sign-in: %s", e)}
 	}

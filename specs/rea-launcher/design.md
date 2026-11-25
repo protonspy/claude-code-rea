@@ -61,9 +61,19 @@ For REA the pinned hash was also matched against its SLSA provenance, whose sour
 ## The OpenCode configuration
 
 Passed in `OPENCODE_CONFIG_CONTENT`, which OpenCode loads after every file, so it overrides the
-user's and the project's configuration on every key it sets. `OPENCODE_CONFIG_DIR` points at
+user's configuration on every key it sets. `OPENCODE_CONFIG_DIR` points at
 `rea-6.10.1/opencode`, where OpenCode finds REA's skills; it too is loaded after the global
 directory. Neither touches a file OpenCode reads in other sessions.
+
+The session directory may hold the target, so nothing in it is configuration (R5.5): OpenCode
+merges a project `opencode.json` — a planted MCP server, a loosened rule — and runs `.opencode/`
+plugins with the key in their environment. OpenCode 1.19.5 is started with
+`OPENCODE_DISABLE_PROJECT_CONFIG`, `OPENCODE_DISABLE_CLAUDE_CODE`,
+`OPENCODE_DISABLE_EXTERNAL_SKILLS` (which also drops stale copies of REA's skill in
+`~/.agents/skills` and `~/.claude/skills`), `OPENCODE_DISABLE_AUTOUPDATE` and
+`OPENCODE_DISABLE_LSP_DOWNLOAD` set, and without `OPENCODE_ENABLE_EXA`. Checked against the real
+binary: with them a planted `opencode.json` is absent from `opencode debug config`, and REA's
+skill still loads from the launcher's directory.
 
 ```json
 {
@@ -71,12 +81,13 @@ directory. Neither touches a file OpenCode reads in other sessions.
   "model": "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic",
   "small_model": "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic",
   "share": "disabled",
+  "autoupdate": false,
   "instructions": ["<managed>/AGENTS.md"],
   "mcp": {
     "rea": {
       "type": "local",
       "command": ["<managed>/node-24.22.3/node", "<managed>/rea-6.10.1/node_modules/rea-agents/scripts/rea.mjs", "mcp"],
-      "environment": { "GHIDRA_INSTALL_DIR": "…", "JAVA_HOME": "…" },
+      "environment": { "GHIDRA_INSTALL_DIR": "…", "JAVA_HOME": "…", "NANO_GPT_API_KEY": "", "NEARAI_API_KEY": "" },
       "enabled": true,
       "timeout": 30000
     }
@@ -88,16 +99,12 @@ directory. Neither touches a file OpenCode reads in other sessions.
               "*.pem": "deny", "*.key": "deny", "*.npmrc": "deny" },
     "webfetch": "deny",
     "websearch": "deny",
+    "codesearch": "deny",
     "external_directory": { "*": "deny", "<managed>/rea-6.10.1/opencode/skills/*": "allow" },
-    "rea_*": "allow",
-    "rea_*adb*": "ask",
-    "rea_capture_*": "ask",
-    "rea_observe_*": "ask",
-    "rea_*web*": "ask",
-    "rea_*browser*": "ask",
-    "rea_*electron*": "ask",
-    "rea_*runtime*": "ask",
-    "rea_trace_native_*": "ask"
+    "rea_*": "ask",
+    "rea_address_name": "allow",
+    "…": "allow",
+    "rea_xrefs": "allow"
   }
 }
 ```
@@ -105,11 +112,20 @@ directory. Neither touches a file OpenCode reads in other sessions.
 **Order is the contract.** OpenCode applies the last permission rule that matches, and its keys
 match MCP tools by name (`rea_<tool>`), so `rea_*` must come before every exception. Go's
 `encoding/json` sorts map keys, which would make the order an accident of the alphabet; the
-configuration is built from an ordered object type with its own `MarshalJSON`. The REA ask-list is
-by name: anything that installs on, starts or reads a device (`adb`), launches or attaches to a
-process, browser, page or application (`capture`, `observe`, `web`, `browser`, `electron`,
-`runtime`) or drives a native UI (`trace_native_`). Static analysis of a file on disk is allowed.
-The rest are the reviewed session rules of [[opencode]], with one exception added:
+configuration is built from an ordered object type with its own `MarshalJSON`.
+
+**REA's tools ask unless reviewed** (R5.3). `rea_*` asks, then 180 of REA 6.10.1's 261 tools are
+allowed by exact name (`internal/launcher/rea_tools.go`): analysis of files on disk and of the
+analysis session. The other 81 — adb, Frida, gdb, Rizin, Cutter, the desktop-build computer,
+browser, page, Electron and runtime capture and observation — ask, and so does any tool a later REA
+adds. REA's declared effects are too coarse to decide alone: Hopper-backed decompilation declares
+UI changes and network access, Ghidra-backed analysis declares foreign code. The test reads a
+snapshot of REA's catalog (`testdata/rea-6.10.1-tools.json`) and fails if an allowed tool is not
+REA's, belongs to a runtime family, or declares runtime effects without being a reviewed
+engine-backed tool.
+
+The rest are the reviewed session rules of [[opencode]], plus `codesearch` denied, with one
+exception added:
 `external_directory` lets OpenCode read REA's skills, whose `references/` the skill tells the
 model to read, and nothing else outside the project.
 
@@ -120,14 +136,18 @@ Node.js process loading a 186 MB package; 30 s is what REA's own setup gives Cod
 
 Order (R2): the provider's variable → the credential store (`go-keyring`, service
 `rea-launcher`, account = provider name) → sign-in (NanoGPT) or hidden prompt (NEAR AI) → saved.
-OpenCode receives it only as `NANO_GPT_API_KEY` or `NEARAI_API_KEY` in its environment.
+OpenCode receives it only as `NANO_GPT_API_KEY` or `NEARAI_API_KEY` in its environment. OpenCode
+starts REA with its own environment merged with the configured one, and REA starts targets from its
+own, so the configured one blanks both variables; npm runs without them (R2.13). OpenCode's shell
+tool and language servers still inherit the key.
 
 **Sign-in** is NanoGPT's shortcut PKCE flow, which needs no client registration:
 
 1. a 64-byte random verifier and state; challenge = base64url(SHA-256(verifier));
 2. a listener on `127.0.0.1:0` — the documented example port, 8787, is Headroom's here;
 3. browser to `https://nano-gpt.com/auth?callback_url=http://127.0.0.1:<port>/callback&code_challenge=…&code_challenge_method=S256&scope=api.use models.read&state=…&client_name=rea-launcher`;
-4. the callback must carry the same state, else it is rejected (R2.4);
+4. only a GET to `127.0.0.1:<port>` carrying the same state counts; anything else — a page probing
+   the port, a rebound host name — gets 400 and the sign-in keeps waiting (R2.14);
 5. `POST https://nano-gpt.com/api/v1/auth/keys` `{"grant_type":"authorization_code","code":…,"code_verifier":…}` returns `key`, a dedicated `sk-nano-` key that the user's NanoGPT key list names `OAuth: rea-launcher`, with the spend cap chosen on the consent screen.
 
 ## REA's engine
@@ -145,15 +165,16 @@ REA searches the usual install locations itself.
 
 ## Risks
 
-- **REA tool names are the ask-list.** A tool REA adds or renames under a name none of the
-  patterns match is allowed without asking. Re-read the list on every REA pin change.
+- **The allow-list is a review.** A REA pin change needs a new catalog snapshot and a new review
+  of `rea_tools.go`; until then a tool REA renamed asks rather than runs.
 - **Not everything is hash-pinned.** `frida`, one of REA's dependencies, downloads a native
   binary from its install script, outside the shrinkwrap. OpenCode's platform packages carry no
   provenance, so their pinned hash is the registry's at the time of pinning.
 - **The ephemeral loopback port is unverified.** NanoGPT documents fixed ports; the shortcut flow
   takes the callback per request, so any port should do. The first real sign-in is the test.
-- **Two copies of REA's skill.** A user whose `~/.agents/skills` or `~/.claude/skills` already
-  holds `reverse-engineer-anything` from another REA version gives OpenCode two skills of one
-  name; which one OpenCode picks is not documented.
+- **Git in a hostile tree.** `git status`, `git diff` and `git log` run unasked, and a target's
+  `.git/config` can name a pager or fsmonitor command. OpenCode runs git in the project itself
+  too, so the defence is the one the wiki gives: start the session in a working directory, not in
+  the target's.
 - **The tool-call deadline.** Ghidra's first analysis of a large binary can outlast an OpenCode
   tool call; REA's recovery guide, in the skill, covers a timed-out call.

@@ -200,7 +200,7 @@ func installREA(ctx context.Context, sys System, dir string) error {
 	code, err := sys.Run(ctx, Command{
 		Path:   l.Node(),
 		Args:   []string{l.NPM(), "install", "--prefix", dir, "--omit=dev", "--no-audit", "--no-fund", "--loglevel=error", "--registry=https://registry.npmjs.org/", archive},
-		Env:    sys.environWith(map[string]string{pathName: pathValue}),
+		Env:    sys.environWith(map[string]string{pathName: pathValue}, keyVars()...),
 		Stdout: sys.Stderr,
 		Stderr: sys.Stderr,
 	})

@@ -20,14 +20,17 @@ import (
 // DefaultSystem returns the System of a real run: the user's cache and configuration
 // directories, the process's environment and terminal, the network, the operating system's
 // credential store, and the browser.
-func DefaultSystem(version string) System {
+//
+// There is no fallback to the temporary directory: on a shared machine another user could
+// put a toolchain there for the launcher to take as installed.
+func DefaultSystem(version string) (System, error) {
 	cache, err := os.UserCacheDir()
 	if err != nil {
-		cache = os.TempDir()
+		return System{}, fmt.Errorf("no user cache directory for the toolchain: %w", err)
 	}
 	config, err := os.UserConfigDir()
 	if err != nil {
-		config = cache
+		return System{}, fmt.Errorf("no user configuration directory for the settings: %w", err)
 	}
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	transport.ResponseHeaderTimeout = time.Minute
@@ -53,7 +56,7 @@ func DefaultSystem(version string) System {
 	if term.IsTerminal(int(os.Stdin.Fd())) {
 		sys.Prompt = readSecret
 	}
-	return sys
+	return sys, nil
 }
 
 // ignoreInterrupts keeps an interrupt from stopping the launcher while OpenCode runs. It

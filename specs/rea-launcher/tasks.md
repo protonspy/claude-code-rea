@@ -6,11 +6,19 @@
 - [x] 1.2 (TDD) Build the OpenCode configuration as ordered JSON with the permission rules — R1.4, R4.1, R5.1, R5.2, R5.3, R5.4
   _Depends 1.1_
 
+- [x] 1.3 (Unit) Allow only REA's reviewed static tools, checked against a snapshot of REA's catalog — R5.3, R5.4
+  _Depends 1.2_
+  _Reason security review: the name-pattern ask-list missed REA's Frida, gdb, Rizin, Cutter and desktop-build tools_
+
 ## 2 · The provider key
 
 - [x] 2.1 (TDD) Sign in to NanoGPT with OAuth PKCE on a loopback callback — R2.3, R2.4
 - [x] 2.2 (Unit) Resolve the key from the variable, the store, sign-in or the prompt, and save or delete it — R2.1, R2.2, R2.5, R2.6, R2.7, R2.8, R2.9, R2.12
   _Depends 1.1, 2.1_
+
+- [x] 2.3 (Unit) Refuse foreign sign-in callbacks and keep the keys out of npm's and REA's environment — R2.4, R2.13, R2.14
+  _Depends 2.2_
+  _Reason security review: any page could end the sign-in, and targets REA runs inherited the key_
 
 ## 3 · The managed toolchain
 
@@ -34,6 +42,10 @@
   _Depends 1.2, 2.2, 3.3_
 - [x] 5.2 (Unit) Wire launch, setup, logout, version and print-config — R6.1, R6.2, R6.5, R7.1, R7.2
   _Depends 4.2, 4.3, 5.1_
+
+- [x] 5.3 (Unit) Start OpenCode with nothing loaded from the session directory — R5.5
+  _Depends 5.1_
+  _Reason security review: a planted opencode.json or plugin in the session directory ran with the key_
 
 ## 6 · CI and release
 

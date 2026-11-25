@@ -152,3 +152,25 @@ func TestUnknownFormatIsAnError(t *testing.T) {
 		t.Error("want an error")
 	}
 }
+
+func TestAChainOfInnerLinksCannotLeadOutside(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("a symbolic link needs a privilege there, and no Windows archive holds one")
+	}
+	// Each link alone resolves inside the destination; followed in turn, s is its parent.
+	data := tgzBytes(t,
+		entry{name: "package/sub/", dir: true},
+		entry{name: "package/t", link: "sub/.."},
+		entry{name: "package/s", link: "t/.."},
+		entry{name: "package/s/evil", body: "x"},
+	)
+	parent := t.TempDir()
+	dest := filepath.Join(parent, "dest")
+	os.Mkdir(dest, 0o755)
+	if err := extract(writeTemp(t, "a.tgz", data), formatTarGz, dest, 1); err == nil {
+		t.Error("want the write through the chain refused")
+	}
+	if _, err := os.Lstat(filepath.Join(parent, "evil")); err == nil {
+		t.Error("a file was written outside the destination")
+	}
+}
