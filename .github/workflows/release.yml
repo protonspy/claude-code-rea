@@ -48,4 +48,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ github.ref_name }}
-        run: gh release create "$VERSION" dist/* --title "rea-launcher $VERSION" --generate-notes --verify-tag
+        run: |
+          set -euo pipefail
+          flags=()
+          # A semver pre-release tag, such as v0.2.0-rc.1, never becomes the latest release.
+          case "$VERSION" in *-*) flags+=(--prerelease) ;; esac
+          gh release create "$VERSION" dist/* --title "rea-launcher $VERSION" --generate-notes --verify-tag "${flags[@]}"
