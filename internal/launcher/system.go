@@ -4,6 +4,8 @@ import (
 	"context"
 	"io"
 	"net/http"
+	"os"
+	"sort"
 	"strings"
 	"time"
 )
@@ -22,6 +24,7 @@ type System struct {
 	OpenURL          func(url string) error
 	Run              Runner
 	IgnoreInterrupts func()
+	Pins             Pins
 	AuthURL          string // NanoGPT's sign-in page
 	TokenURL         string // NanoGPT's code exchange
 	SignInTimeout    time.Duration
@@ -65,6 +68,48 @@ func (s System) sameVar(a, b string) bool {
 		return strings.EqualFold(a, b)
 	}
 	return a == b
+}
+
+// layout is where the managed components live for this system.
+func (s System) layout() Layout { return Layout{Root: s.Root, OS: s.Platform.OS} }
+
+// environWith returns the launcher's environment with set's variables replacing any of
+// the same name.
+func (s System) environWith(set map[string]string) []string {
+	out := make([]string, 0, len(s.Environ)+len(set))
+	for _, kv := range s.Environ {
+		k, _, _ := strings.Cut(kv, "=")
+		replaced := false
+		for name := range set {
+			if s.sameVar(k, name) {
+				replaced = true
+				break
+			}
+		}
+		if !replaced {
+			out = append(out, kv)
+		}
+	}
+	names := make([]string, 0, len(set))
+	for name := range set {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	for _, name := range names {
+		out = append(out, name+"="+set[name])
+	}
+	return out
+}
+
+// pathWith returns the PATH with dir first.
+func (s System) pathWith(dir string) (name, value string) {
+	name = "PATH"
+	for _, kv := range s.Environ {
+		if k, v, ok := strings.Cut(kv, "="); ok && s.sameVar(k, "PATH") {
+			return k, dir + string(os.PathListSeparator) + v
+		}
+	}
+	return name, dir
 }
 
 func (s System) oauth() OAuth {

@@ -122,3 +122,69 @@ func renameRetrying(from, to string) error {
 	}
 	return err
 }
+
+// ensureToolchain installs whatever of Node.js, OpenCode and REA is missing.
+func ensureToolchain(ctx context.Context, sys System) error {
+	l := sys.layout()
+	node, opencode, err := sys.Pins.forPlatform(sys.Platform)
+	if err != nil {
+		return err
+	}
+	for _, c := range []struct {
+		dest string
+		a    Artifact
+	}{{l.NodeDir(), node}, {l.OpenCodeDir(), opencode}} {
+		if err := publish(c.dest, func(tmp string) error { return unpack(ctx, sys, c.a, tmp) }); err != nil {
+			return fmt.Errorf("install %s: %w", c.a.Name, err)
+		}
+	}
+	if err := publish(l.READir(), func(tmp string) error { return installREA(ctx, sys, tmp) }); err != nil {
+		return fmt.Errorf("install %s: %w", sys.Pins.REA.Name, err)
+	}
+	return nil
+}
+
+// unpack downloads a, verifies it, and extracts it into dir.
+func unpack(ctx context.Context, sys System, a Artifact, dir string) error {
+	fmt.Fprintln(sys.Stderr, "rea-launcher: installing", a.Name)
+	archive, err := fetch(ctx, sys.HTTP, a, sys.layout().Downloads())
+	if err != nil {
+		return err
+	}
+	defer os.Remove(archive)
+	return extract(archive, a.Format, dir, a.Strip)
+}
+
+// installREA installs the verified REA tarball into dir with the managed npm, whose
+// dependencies come from the tarball's npm-shrinkwrap.json, and copies REA's skills into
+// the OpenCode configuration directory beside it.
+func installREA(ctx context.Context, sys System, dir string) error {
+	l := sys.layout()
+	a := sys.Pins.REA
+	fmt.Fprintln(sys.Stderr, "rea-launcher: installing", a.Name)
+	archive, err := fetch(ctx, sys.HTTP, a, l.Downloads())
+	if err != nil {
+		return err
+	}
+	defer os.Remove(archive)
+	pathName, pathValue := sys.pathWith(l.NodeBin())
+	code, err := sys.Run(ctx, Command{
+		Path:   l.Node(),
+		Args:   []string{l.NPM(), "install", "--prefix", dir, "--omit=dev", "--no-audit", "--no-fund", "--loglevel=error", archive},
+		Env:    sys.environWith(map[string]string{pathName: pathValue}),
+		Stdout: sys.Stderr,
+		Stderr: sys.Stderr,
+	})
+	if err != nil {
+		return fmt.Errorf("run npm: %w", err)
+	}
+	if code != 0 {
+		return fmt.Errorf("npm install exited with status %d", code)
+	}
+	pkg := filepath.Join(dir, "node_modules", "rea-agents")
+	if _, err := os.Stat(filepath.Join(pkg, "scripts", "rea.mjs")); err != nil {
+		return fmt.Errorf("npm installed no REA entry script: %w", err)
+	}
+	_, err = installSkills(pkg, filepath.Join(dir, "opencode", "skills"))
+	return err
+}
