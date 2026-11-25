@@ -53,3 +53,8 @@
   _Depends 5.2_
 - [x] 6.2 (Unit) Add the release workflow with SHA256SUMS and build provenance — R8.2
   _Depends 6.1_
+
+## 7 · Automatic approval
+
+- [x] 7.1 (Unit) Start OpenCode with --auto unless --ask is given, and warn while approvals are automatic — R5.6, R5.7
+  _Depends 5.2_

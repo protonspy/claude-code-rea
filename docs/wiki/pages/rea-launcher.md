@@ -48,6 +48,7 @@ rea-launcher                                  # NanoGPT, the Heretic DeepSeek V4
 rea-launcher --provider nearai                # NEAR AI, in its TEE
 rea-launcher --model lyber/deepseek-v4.1-flash-1017-abliterated
 rea-launcher -- run "explain how C:\samples\app.exe checks its licence"
+rea-launcher --ask                            # be asked before each shell command, edit and REA runtime tool
 rea-launcher --print-config                   # the session configuration, without starting it
 rea-launcher logout                           # delete the stored key
 ```
@@ -58,12 +59,13 @@ Arguments after `--` go to OpenCode unchanged. A run installs whatever setup has
 The session runs in the current directory: start it in a working directory for the analysis,
 not in the folder that holds the target or anything secret. It gets:
 
-- the reviewed permission rules of [[opencode]] — every edit and shell command but `git status`,
-  `git diff` and `git log` asks, key files and the web are denied, and nothing outside the
-  project is reachable but REA's skills;
+- the reviewed permission rules of [[opencode]] — under `--ask`, every edit and shell command but
+  `git status`, `git diff` and `git log` asks; key files and the web are denied to OpenCode's own
+  tools, nothing outside the project is reachable to them but REA's skills, which no session may
+  edit, and a tool-call loop is stopped;
 - REA's tools: 180 reviewed as static analysis run unasked; the rest — Frida, gdb, Rizin, Cutter,
-  adb, the desktop-build computer, browser, page and runtime capture — ask, as does any tool a
-  later REA adds;
+  adb, the desktop-build computer, browser, page and runtime capture — ask under `--ask`, as does
+  any tool a later REA adds;
 - `AGENTS.md`, below;
 - session sharing and code search off, and the small model pinned to the main one;
 - nothing from the session directory: no project `opencode.json`, no `.opencode/` plugin, no
@@ -73,8 +75,16 @@ The key is in OpenCode's environment, and so in that of its shell commands and l
 REA gets the variable blanked, so the targets REA runs do not inherit it, and npm installs REA
 without it.
 
-When a prompt comes, read the whole command, answer `once`, and reject anything that sends data
-to an address or reads credentials.
+**Approvals are automatic by default** (adr:0003-approve-launcher-sessions-automatically): the
+launcher starts OpenCode with `--auto`, so everything above that would ask — shell commands, edits,
+REA's runtime tools — runs without asking. The denials bind OpenCode's own file and web tools, not a shell command: an
+instruction planted in a target can run any command, read any file you can, start the sample
+through Frida or gdb, or read the key from OpenCode's environment or the credential store and send
+it out with `curl`. What it leaves behind — a Git hook, a build file, a change to the launcher's
+directory — outlasts the session, and a later `--ask` session runs on top of it. Run sessions in a disposable VM with no
+secrets, on a NanoGPT key with a low spend cap, or pass `--ask`. When a prompt comes under
+`--ask`, read the whole command, answer `once`, and reject anything that sends data to an address
+or reads credentials.
 
 ## The AGENTS.md
 

@@ -129,6 +129,15 @@ exception added:
 `external_directory` lets OpenCode read REA's skills, whose `references/` the skill tells the
 model to read, and nothing else outside the project.
 
+**Approvals are automatic** (R5.6, R5.7; adr:0003-approve-launcher-sessions-automatically).
+The launcher passes OpenCode's `--auto`, which approves every `ask` and leaves every `deny`. OpenCode
+1.19.5 accepts it only on its interface and on `run` — before another command such as `debug` it is
+a parse error — so it goes first for no arguments, a flag or a project directory, after `run` for
+`run`, and nowhere for any other command. `--ask` leaves the rules above to ask. Shell commands are
+not bound by the file and web denials, so the edit tool's denial of REA's skills and the
+`doom_loop` denial are the only rules added for automatic sessions; the rest of the exposure is in
+the ADR.
+
 The MCP `timeout` is OpenCode's limit for listing REA's tools — 5 s by default, short for a
 Node.js process loading a 186 MB package; 30 s is what REA's own setup gives Codex.
 

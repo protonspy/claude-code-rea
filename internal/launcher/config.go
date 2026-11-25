@@ -82,6 +82,12 @@ func permissions(skillsDir string) object {
 	for _, p := range uniq(filepath.Join(skillsDir, "*"), filepath.ToSlash(filepath.Join(skillsDir, "*"))) {
 		outside = append(outside, member{p, "allow"})
 	}
+	// REA's skills are loaded as instructions by every later session, so no session may
+	// write them, even with approvals automatic.
+	skillsReadOnly := object{{"*", "ask"}}
+	for _, p := range uniq(filepath.Join(skillsDir, "*"), filepath.ToSlash(filepath.Join(skillsDir, "*"))) {
+		skillsReadOnly = append(skillsReadOnly, member{p, "deny"})
+	}
 	rules := object{
 		{"bash", object{
 			{"*", "ask"},
@@ -89,7 +95,7 @@ func permissions(skillsDir string) object {
 			{"git diff", "allow"},
 			{"git log", "allow"},
 		}},
-		{"edit", "ask"},
+		{"edit", skillsReadOnly},
 		{"read", object{
 			{"*", "allow"},
 			{"*.env", "deny"},
@@ -102,6 +108,7 @@ func permissions(skillsDir string) object {
 		{"webfetch", "deny"},
 		{"websearch", "deny"},
 		{"codesearch", "deny"},
+		{"doom_loop", "deny"},
 		{"external_directory", outside},
 	}
 	// REA's tools are rea_<tool>. Every one asks, then the reviewed static ones are allowed
