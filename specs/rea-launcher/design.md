@@ -19,6 +19,7 @@ internal/launcher/
   toolchain.go  download, verify, unpack, publish                              R3
   archive.go    zip and tar.gz extraction, contained to the destination        R3.4
   rea.go        REA environment, skills, doctor and settings                   R4
+  engine.go     the Ghidra and JDK REA admits                                  R4.8, R4.9
   agents.md     the reverse-engineering instructions, embedded                 R4.7
   config.go     the OpenCode configuration as ordered JSON                     R1.4, R4, R5
   opencode.go   running OpenCode                                               R6
@@ -171,9 +172,21 @@ as `name: classification — detail`, with REA's `remediation`.
 `--ghidra <dir>` and `--java-home <dir>` are saved as `GHIDRA_INSTALL_DIR` and `JAVA_HOME` in
 `os.UserConfigDir()/rea-launcher/engine.json` — the launcher's own settings, not REA's: REA 6.10.1
 has no `rea config` command, and REA's documented settings file would also reach the REA that
-Claude Code runs. The REA environment of a session is those settings, overridden by the same
-variables, `GHIDRA_*` and `REA_*`, from the launcher's environment (R4.2, R4.5). With neither,
+Claude Code runs. The REA environment of a session is `JAVA_HOME`, `GHIDRA_*` and `REA_*` from
+the launcher's environment, overridden by those settings (R4.2, R4.5): a `JAVA_HOME` set for every
+program says nothing about the JDK Ghidra needs, and a path given to setup does. Only those
+variables pass, from either source: a key of `engine.json` such as `NODE_OPTIONS` is dropped. With neither,
 REA searches the usual install locations itself.
+
+**Compatibility** (R4.8, R4.9) is read from two files, without running anything:
+`<ghidra>/Ghidra/application.properties` gives `application.version` and `application.java.min`,
+and `<jdk>/release` gives `JAVA_VERSION`. REA 6.10.1 admits Ghidra 12.2 and every later 12.x
+(`dist/ghidra/GhidraReleasePolicy.js`: 12.1 lacks the decompiler method its bridge compiles
+against), held in `engine.go` beside the pin it follows. Setup checks the pair a session would get
+— the given paths over the saved and environment ones — before saving, so a refused setup leaves
+the old settings in place; a launch checks the same pair and warns, since REA's tools that need no
+engine still work. A JDK no variable names, or a Ghidra that declares no floor, is left to REA's
+doctor.
 
 ## Risks
 

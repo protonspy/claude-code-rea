@@ -183,7 +183,7 @@ func TestSetupReportsEveryStep(t *testing.T) {
 	sys, io := testSystem(t, "NANO_GPT_API_KEY=k")
 	fakeToolchain(t, &sys)
 	withOpenCode(t, &sys, 0, `{"healthy":true}`)
-	ghidra := t.TempDir()
+	ghidra := fakeGhidra(t, "12.2", "25")
 	if code := Main([]string{"setup", "--ghidra", ghidra}, sys); code != 0 {
 		t.Fatalf("exit %d:\n%s%s", code, io.stdout, io.stderr)
 	}

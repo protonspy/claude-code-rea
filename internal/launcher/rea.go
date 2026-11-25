@@ -150,32 +150,45 @@ func saveEngineSettings(sys System, set map[string]string) error {
 	return writeAtomic(engineSettings(sys), append(data, '\n'), 0o600)
 }
 
-// reaEnvironment returns the environment REA's server runs with: the saved engine settings,
-// overridden by JAVA_HOME and any GHIDRA_* or REA_* variable of the launcher's environment.
+// reaEnvironment returns the environment REA's server runs with: JAVA_HOME and any GHIDRA_*
+// or REA_* variable of the launcher's environment, overridden by the saved engine settings.
+// A JAVA_HOME set for every program is not a choice of the JDK Ghidra runs on; setup is.
 func reaEnvironment(sys System) (map[string]string, error) {
-	env, err := loadEngineSettings(sys)
+	saved, err := loadEngineSettings(sys)
 	if err != nil {
 		return nil, err
 	}
+	env := map[string]string{}
 	for _, kv := range sys.Environ {
 		k, v, ok := strings.Cut(kv, "=")
 		if !ok || k == "" {
 			continue
 		}
-		name := k
-		if sys.Platform.OS == "windows" {
-			name = strings.ToUpper(k)
-		}
-		if name == "JAVA_HOME" || strings.HasPrefix(name, "GHIDRA_") || strings.HasPrefix(name, "REA_") {
-			for saved := range env {
-				if sys.sameVar(saved, k) {
-					delete(env, saved)
-				}
-			}
+		if sys.engineVar(k) {
 			env[k] = v
 		}
 	}
+	for name, v := range saved {
+		if !sys.engineVar(name) {
+			continue
+		}
+		for k := range env {
+			if sys.sameVar(k, name) {
+				delete(env, k)
+			}
+		}
+		env[name] = v
+	}
 	return env, nil
+}
+
+// engineVar reports whether name is a variable REA's engine reads: JAVA_HOME, GHIDRA_* or
+// REA_*. Nothing else, from the environment or the saved settings, reaches REA's server.
+func (s System) engineVar(name string) bool {
+	if s.Platform.OS == "windows" {
+		name = strings.ToUpper(name)
+	}
+	return name == "JAVA_HOME" || strings.HasPrefix(name, "GHIDRA_") || strings.HasPrefix(name, "REA_")
 }
 
 // checkEngine runs REA's doctor for Ghidra and returns whether the engine is ready and, if

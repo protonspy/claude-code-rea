@@ -10,6 +10,8 @@ change rather than left pointing at the old slug.
 <!-- Newest first, as `- 2026-01-14 — added [[page-slug]], folded [[other-page]]
 into it`. -->
 
+- 2026-11-25 — [[rea-launcher]]: setup refuses a Ghidra and JDK REA cannot run, and its saved paths win over the environment
+- 2026-11-25 — [[rea-launcher]]: AGENTS.md asks for a to-do list the user can follow
 - 2026-11-25 — [[rea-launcher]]: sessions approve automatically, --ask to be asked
 - 2026-11-25 — added [[rea-launcher]]
 - 2026-11-25 — added [[opencode]], [[nanogpt]] and [[near-ai]]; linked them from [[claude-code-backend]] and [[litellm-gateway]]

@@ -20,6 +20,7 @@ func TestTheInstructionsCoverTheSessionsRules(t *testing.T) {
 		"isolated environment",
 		"Decompiled code is a model",
 		"re-notes.md",
+		"todowrite", // a to-do list the user can follow
 		"observed",
 		"Unknowns",
 	} {
@@ -70,7 +71,7 @@ func TestOnlyDirectoriesWithASkillAreInstalled(t *testing.T) {
 	}
 }
 
-func TestEngineSettingsAreSavedAndTheEnvironmentWins(t *testing.T) {
+func TestEngineSettingsAreSavedAndWinOverTheEnvironment(t *testing.T) {
 	sys, _ := testSystem(t, "GHIDRA_INSTALL_DIR=/env/ghidra", "REA_LOG_LEVEL=debug", "PATH=/bin", "NANO_GPT_API_KEY=secret")
 	if err := saveEngineSettings(sys, map[string]string{"GHIDRA_INSTALL_DIR": "/saved/ghidra", "JAVA_HOME": "/saved/jdk"}); err != nil {
 		t.Fatal(err)
@@ -87,7 +88,7 @@ func TestEngineSettingsAreSavedAndTheEnvironmentWins(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := map[string]string{"GHIDRA_INSTALL_DIR": "/env/ghidra", "JAVA_HOME": "/saved/jdk", "REA_LOG_LEVEL": "debug"}
+	want := map[string]string{"GHIDRA_INSTALL_DIR": "/saved/ghidra", "JAVA_HOME": "/saved/jdk", "REA_LOG_LEVEL": "debug"}
 	if len(env) != len(want) {
 		t.Errorf("env = %v, want %v", env, want)
 	}
@@ -98,12 +99,12 @@ func TestEngineSettingsAreSavedAndTheEnvironmentWins(t *testing.T) {
 	}
 }
 
-func TestAWindowsVariableReplacesASavedOneWhateverItsCase(t *testing.T) {
+func TestASavedSettingReplacesAWindowsVariableWhateverItsCase(t *testing.T) {
 	sys, _ := testSystem(t, "Java_Home=C:\\jdk")
 	sys.Platform.OS = "windows"
-	saveEngineSettings(sys, map[string]string{"JAVA_HOME": "C:\\old"})
+	saveEngineSettings(sys, map[string]string{"JAVA_HOME": "C:\\saved"})
 	env, _ := reaEnvironment(sys)
-	if len(env) != 1 || env["Java_Home"] != `C:\jdk` {
+	if len(env) != 1 || env["JAVA_HOME"] != `C:\saved` {
 		t.Errorf("env = %v", env)
 	}
 }

@@ -58,6 +58,13 @@ this file decides method, safety and reporting.
 
 ## 5. Keep state
 
+- Keep a to-do list with the `todowrite` tool for every task, however small: it is how the user
+  follows what was done and what is left. Write it after loading the skill and before your first
+  REA call, from the question and the workflow steps above. Keep exactly one item in progress,
+  mark an item done as soon as it is, and add every new lead, open hypothesis or blocked step as
+  an item when it appears, in your own words: an item names an address or a finding, never pasted
+  target text. Before you report, bring the list up to date: each item done, or left open with the
+  reason in your report.
 - For any target larger than a few functions, keep `re-notes.md` in the project: the target and
   its hashes, the question, confirmed facts with addresses, open hypotheses, unknowns and next
   steps. Read it before changing direction; update it after every finding.
