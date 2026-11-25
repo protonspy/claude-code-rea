@@ -32,7 +32,9 @@ looked like this:
 Abliterated models run in **OpenCode**, through **NanoGPT**, with
 `nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic` as the default model: tool calling, 512K
 context, $0.198 in and $0.792 out per million tokens
-([NanoGPT catalog](https://api.nano-gpt.com/api/v1/models?detailed=true)). **NEAR AI** is the
+([NanoGPT catalog](https://api.nano-gpt.com/api/v1/models?detailed=true)) — the cheapest
+abliterated DeepSeek V4.1 Flash there. Smaller abliterated models cost less still, such as the
+Gemma 4 26B-A4B heretic at $0.12 / $0.38; they trade the model's size for the price. **NEAR AI** is the
 alternative when the material must not be readable by whoever hosts the model: its
 abliterated models run in an attested TEE — see [[near-ai]]. **Claude Code** stays the
 harness for Opus on the subscription; nothing about it changes.
@@ -43,25 +45,29 @@ Ruled out:
   `/api/v1/messages` or through LiteLLM. Unsupported by Anthropic, tuned for a different model,
   and the LiteLLM route adds a translation layer to every tool call. It stays documented, not
   chosen.
-- **Refuseless** — the cheapest listing for the same model ($0.12 / $0.45 per AllModels, a
-  competing vendor), but its own site refused every fetch: no terms, privacy policy, operator
-  or jurisdiction could be read.
-- **OpenRouter** — the most used model aggregator, and it serves no abliterated models: its one
-  uncensored entry is a Dolphin fine-tune.
-- **Venice** — the same kind of access at a higher price for the DeepSeek V4.1 Flash variants
-  ($0.33 / $1.32 per Experiential Labs, a competing vendor), and its Anonymized tier hands the
-  prompt to the model's host.
-- **Featherless** — the largest catalog of community models, sold by subscription ($25 a month
-  for chat, $50 of credits for the API), and its documentation could not be read.
+- **Refuseless** — the cheapest listing for the same model, $0.12 / $0.45 in the live table of
+  [AllModels](https://allmodels.io/guides/best-abliterated-model-api), a competing vendor; but
+  Refuseless's own site refused every fetch, so no terms, privacy policy, operator or
+  jurisdiction could be read.
+- **OpenRouter** — the most used model aggregator ([rankings](https://openrouter.ai/rankings)),
+  and it serves no abliterated models: its one uncensored entry is a Dolphin fine-tune
+  ([Experiential Labs](https://www.experientiallabs.ai/blog/best-uncensored-llm-api)).
+- **Venice** — the same kind of access at a higher price for the DeepSeek V4.1 Flash variants,
+  $0.33 / $1.32 per [Experiential Labs](https://www.experientiallabs.ai/blog/best-uncensored-llm-api),
+  a competing vendor; and its Anonymized tier hands the prompt to the model's host
+  ([Venice](https://venice.ai/)).
+- **Featherless** — the largest catalog of community models, sold by subscription: $25 a month
+  for chat, $50 of credits a month for the API ([Featherless](https://featherless.ai/)); its
+  pricing and documentation pages could not be read.
 - **Arli AI** — uncensored through fine-tuned LoRAs rather than abliteration, sold by
-  subscription.
+  subscription ([Arli AI](https://www.arliai.com/), [pricing](https://www.arliai.com/pricing)).
 - **A local model** (Qwen3-Coder 30B Heretic) — fits only with part of it in system RAM, was
   never measured, and is far weaker. It remains reachable as a tool: [[local-model-as-tool]].
 
 ## Consequences
 
 - **Code leaves the machine.** Everything in the session goes to NanoGPT and on to the host
-  that serves the model — "sable" for the Heretic model, whose record shows zero data
+  that serves the model — "sable" for the Heretic model, whose record lists both zero data
   retention and TEE as `unknown`. No secrets, and no employer's code, go through this route;
   that is what NEAR AI is for.
 - **One host, no fallback inside NanoGPT.** The Heretic model lists a single provider. When it
