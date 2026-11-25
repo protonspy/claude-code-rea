@@ -49,7 +49,7 @@
 
 ## 6 · CI and release
 
-- [ ] 6.1 (Unit) Add the CI workflow that builds, vets and tests on Linux and Windows — R8.1
+- [x] 6.1 (Unit) Add the CI workflow that builds, vets and tests on Linux and Windows — R8.1
   _Depends 5.2_
-- [ ] 6.2 (Unit) Add the release workflow with SHA256SUMS and build provenance — R8.2
+- [x] 6.2 (Unit) Add the release workflow with SHA256SUMS and build provenance — R8.2
   _Depends 6.1_
