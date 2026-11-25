@@ -1,9 +1,9 @@
 {
   "check": {
-    "build": "skipped",
-    "format": "skipped",
-    "lint": "skipped",
-    "test": "skipped"
+    "build": "go build ./...",
+    "format": "bash scripts/check-format.sh",
+    "lint": "go vet ./...",
+    "test": "bash scripts/check-test.sh"
   },
   "codegraph": [],
   "files": [
