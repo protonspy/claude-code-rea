@@ -79,8 +79,8 @@ skill still loads from the launcher's directory.
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic",
-  "small_model": "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic",
+  "model": "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic:thinking",
+  "small_model": "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic:thinking",
   "share": "disabled",
   "autoupdate": false,
   "instructions": ["<managed>/AGENTS.md"],

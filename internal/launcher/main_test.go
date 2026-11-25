@@ -64,7 +64,7 @@ func TestLaunchRunsOpenCodeWithTheSessionAndTheKey(t *testing.T) {
 		t.Fatalf("OPENCODE_CONFIG_CONTENT = %q", cfg)
 	}
 	var doc struct{ Model, Instructions any }
-	if err := json.Unmarshal([]byte(cfg[0]), &doc); err != nil || doc.Model != "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic" {
+	if err := json.Unmarshal([]byte(cfg[0]), &doc); err != nil || doc.Model != "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic:thinking" {
 		t.Errorf("config %s: %v", cfg[0], err)
 	}
 	l := sys.layout()

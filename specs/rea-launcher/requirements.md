@@ -1,9 +1,9 @@
 ---
 autonomy: auto
 ci: wait
-branch: feat/ghidra-compat
-delivery: merged
-pr: 7
+branch: feat/thinking-default
+delivery: in-review
+pr: 9
 ---
 
 # Rea launcher — requirements
@@ -21,7 +21,7 @@ installs them is adr:0002-launch-opencode-with-rea-from-a-go-launcher.
 
 ## R1 · Provider and model
 
-- **R1.1** The launcher shall start OpenCode with `nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic` as the model when no provider and no model are given.
+- **R1.1** The launcher shall start OpenCode with `nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic:thinking` as the model when no provider and no model are given.
 - **R1.2** Where the NEAR AI provider is selected, the launcher shall use `nearai/deepseek-ai/DeepSeek-V4.1-Flash-1017-abliterated` as the default model and `NEARAI_API_KEY` as the key variable.
 - **R1.3** Where a model is given, the launcher shall use that model of the selected provider in place of the provider's default model.
 - **R1.4** The launcher shall set OpenCode's small model to the same model as its main model.

@@ -10,7 +10,7 @@ func TestDefaultProviderRunsTheHereticModel(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got, want := p.QualifiedModel(""), "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic"; got != want {
+	if got, want := p.QualifiedModel(""), "nano-gpt/pqhaz/DeepSeek-V4.1-Flash-1017-heretic:thinking"; got != want {
 		t.Errorf("default model = %q, want %q", got, want)
 	}
 	if p.KeyVar != "NANO_GPT_API_KEY" || !p.SignIn {
