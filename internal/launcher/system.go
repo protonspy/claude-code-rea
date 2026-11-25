@@ -12,7 +12,8 @@ import (
 
 // System is every effect the launcher has on the world, so a test can replace each one.
 type System struct {
-	Root             string // the managed directory
+	Root             string // the managed directory, in the user cache
+	ConfigDir        string // the launcher's settings, in the user configuration directory
 	Platform         Platform
 	Environ          []string // the launcher's environment, as os.Environ returns it
 	Stdin            io.Reader

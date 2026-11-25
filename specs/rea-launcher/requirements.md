@@ -56,7 +56,7 @@ installs them is adr:0002-launch-opencode-with-rea-from-a-go-launcher.
 - **R4.2** When `JAVA_HOME` or a variable whose name starts with `GHIDRA_` or `REA_` is set, the launcher shall pass it to the REA server's environment.
 - **R4.3** The launcher shall make every skill shipped in the managed REA package available to OpenCode in its sessions only.
 - **R4.4** When setting up, the launcher shall check REA's Ghidra engine with REA's own doctor and report whether it is ready.
-- **R4.5** Where a Ghidra directory or a Java home is given to setup, the launcher shall save it in REA's settings before checking the engine.
+- **R4.5** Where a Ghidra directory or a Java home is given to setup, the launcher shall save it in its own settings and pass it to the REA server's environment in every session in which the launcher's environment does not set that variable.
 - **R4.6** If REA's Ghidra engine is not ready after setup, then the launcher shall report what REA says is missing and the setup flags that supply it, and finish setup without failing.
 - **R4.7** The launcher shall install the reverse-engineering instructions compiled into it as an `AGENTS.md` file in its own directory, and give that file to OpenCode as instructions in its sessions only.
 

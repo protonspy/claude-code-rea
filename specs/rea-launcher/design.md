@@ -132,10 +132,16 @@ OpenCode receives it only as `NANO_GPT_API_KEY` or `NEARAI_API_KEY` in its envir
 
 ## REA's engine
 
-Setup runs the managed `rea doctor --provider ghidra --json` with the forwarded environment
-(R4.2) and reads its top-level `healthy`. `--ghidra <dir>` and `--java-home <dir>` are saved first
-with REA's own `rea config --set`, into REA's settings file, which every REA installation of the
-user reads and an environment variable overrides.
+Setup runs the managed `rea doctor --provider ghidra --json` with the session's REA environment
+and reads its top-level `healthy`; when false, each failing entry of `scope_checks` is reported
+as `name: classification — detail`, with REA's `remediation`.
+
+`--ghidra <dir>` and `--java-home <dir>` are saved as `GHIDRA_INSTALL_DIR` and `JAVA_HOME` in
+`os.UserConfigDir()/rea-launcher/engine.json` — the launcher's own settings, not REA's: REA 6.10.1
+has no `rea config` command, and REA's documented settings file would also reach the REA that
+Claude Code runs. The REA environment of a session is those settings, overridden by the same
+variables, `GHIDRA_*` and `REA_*`, from the launcher's environment (R4.2, R4.5). With neither,
+REA searches the usual install locations itself.
 
 ## Risks
 

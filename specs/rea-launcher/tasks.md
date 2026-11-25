@@ -22,10 +22,10 @@
 
 ## 4 · REA
 
-- [ ] 4.1 (Unit) Write the reverse-engineering instructions embedded as AGENTS.md — R4.7
-- [ ] 4.2 (Unit) Forward the engine environment and install REA's skills and the AGENTS.md — R4.2, R4.3, R4.7
+- [x] 4.1 (Unit) Write the reverse-engineering instructions embedded as AGENTS.md — R4.7
+- [x] 4.2 (Unit) Forward the engine environment and install REA's skills and the AGENTS.md — R4.2, R4.3, R4.7
   _Depends 3.3, 4.1_
-- [ ] 4.3 (Unit) Check REA's Ghidra engine with its doctor and save the paths setup is given — R4.4, R4.5, R4.6
+- [x] 4.3 (Unit) Check REA's Ghidra engine with its doctor and save the paths setup is given — R4.4, R4.5, R4.6
   _Depends 3.3_
 
 ## 5 · Commands

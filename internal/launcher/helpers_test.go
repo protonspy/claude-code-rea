@@ -63,6 +63,7 @@ func testSystem(t *testing.T, environ ...string) (System, testIO) {
 	io := testIO{stdout: &bytes.Buffer{}, stderr: &bytes.Buffer{}, store: newMemStore()}
 	sys := System{
 		Root:          t.TempDir(),
+		ConfigDir:     t.TempDir(),
 		Platform:      Platform{runtime.GOOS, runtime.GOARCH},
 		Environ:       environ,
 		Stdin:         strings.NewReader(""),
