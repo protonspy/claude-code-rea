@@ -18,7 +18,9 @@ Claude Code speaks exactly three request formats
 
 OpenAI Chat Completions is not one of them. An OpenAI-compatible API — near.ai, a vLLM
 server — cannot be the backend directly: something has to translate, which is the
-[[litellm-gateway]].
+[[litellm-gateway]]. The other way round is a harness that speaks that format itself, which is
+why abliterated models run in [[opencode]] instead
+(adr:0001-use-opencode-with-nanogpt-for-abliterated-models).
 
 Anthropic's position, verbatim from the [gateway page](https://code.claude.com/docs/en/llm-gateway.md):
 "Anthropic doesn't endorse, maintain, or audit third-party gateway products, and doesn't

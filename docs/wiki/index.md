@@ -21,3 +21,11 @@ their own headings once there are enough that a flat list stops helping. -->
 - [[claude-code-backend]] — the formats Claude Code speaks, the variables that redirect it, what that does to the subscription, and why a session has one backend
 - [[litellm-gateway]] — translating Claude Code to an OpenAI-compatible API, with near.ai's abliterated DeepSeek V4.1 Flash as the worked example
 - [[local-model-as-tool]] — keeping Opus on the subscription and calling a local Ollama model through MCP, the shell or a child session
+
+### Running abliterated models
+
+The choice of harness and provider is adr:0001-use-opencode-with-nanogpt-for-abliterated-models.
+
+- [[opencode]] — the harness: where its config lives, how it picks a model, where the key comes from, and the permission rules that gate the agent
+- [[nanogpt]] — the provider: its abliterated models with tool calling, the default model and its privacy caveats, and the OpenCode setup
+- [[near-ai]] — the private alternative: two abliterated models in attested TEEs, how to fetch and verify the attestation, and the OpenCode setup
