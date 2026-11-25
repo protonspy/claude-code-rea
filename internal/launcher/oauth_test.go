@@ -6,9 +6,11 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"net"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strconv"
 	"strings"
 	"sync/atomic"
 	"testing"
@@ -228,5 +230,49 @@ func TestSignInWorksWhenNoBrowserOpens(t *testing.T) {
 	}
 	if !strings.Contains(stderr.String(), "by hand") {
 		t.Errorf("stderr does not say to open the URL by hand:\n%s", stderr.String())
+	}
+}
+
+func callbackPort(t *testing.T, opened url.URL) string {
+	t.Helper()
+	cb, err := url.Parse(opened.Query().Get("callback_url"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return cb.Port()
+}
+
+func TestTheSignInUsesItsFixedPortAndFallsBackWhenBusy(t *testing.T) {
+	f := &fakeNanoGPT{code: "c1", key: "sk-nano-test"}
+	srv := httptest.NewServer(f)
+	defer srv.Close()
+
+	free, _ := net.Listen("tcp", "127.0.0.1:0")
+	port := free.Addr().(*net.TCPAddr).Port
+	free.Close()
+	var opened url.URL
+	var stderr bytes.Buffer
+	o := newOAuth(srv.URL, browser(t, f, &opened, url.Values{"code": {"c1"}}), &stderr)
+	o.Port = port
+	if _, err := o.SignIn(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+	if got := callbackPort(t, opened); got != strconv.Itoa(port) {
+		t.Errorf("callback on port %s, want the fixed %d", got, port)
+	}
+
+	busy, _ := net.Listen("tcp", "127.0.0.1:0")
+	defer busy.Close()
+	o.Port = busy.Addr().(*net.TCPAddr).Port
+	o.Open = browser(t, f, &opened, url.Values{"code": {"c1"}})
+	stderr.Reset()
+	if _, err := o.SignIn(t.Context()); err != nil {
+		t.Fatal(err)
+	}
+	if got := callbackPort(t, opened); got == strconv.Itoa(o.Port) || got == "" {
+		t.Errorf("callback on port %s, want another than the busy %d", got, o.Port)
+	}
+	if !strings.Contains(stderr.String(), "busy") {
+		t.Errorf("stderr does not say the port is busy:\n%s", stderr.String())
 	}
 }

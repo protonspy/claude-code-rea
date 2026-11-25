@@ -144,7 +144,10 @@ tool and language servers still inherit the key.
 **Sign-in** is NanoGPT's shortcut PKCE flow, which needs no client registration:
 
 1. a 64-byte random verifier and state; challenge = base64url(SHA-256(verifier));
-2. a listener on `127.0.0.1:0` — the documented example port, 8787, is Headroom's here;
+2. a listener on `127.0.0.1:47913`, or any free port when that one is busy — the documented
+   example port, 8787, is Headroom's here. NanoGPT turns each callback URL into its own client
+   (`ngpt_callback_<hash>`, a different one per port, seen against the live service), so a fixed
+   port lets a later sign-in meet the same client and grant instead of minting another key;
 3. browser to `https://nano-gpt.com/auth?callback_url=http://127.0.0.1:<port>/callback&code_challenge=…&code_challenge_method=S256&scope=api.use models.read&state=…&client_name=rea-launcher`;
 4. only a GET to `127.0.0.1:<port>` carrying the same state counts; anything else — a page probing
    the port, a rebound host name — gets 400 and the sign-in keeps waiting (R2.14);
@@ -170,8 +173,8 @@ REA searches the usual install locations itself.
 - **Not everything is hash-pinned.** `frida`, one of REA's dependencies, downloads a native
   binary from its install script, outside the shrinkwrap. OpenCode's platform packages carry no
   provenance, so their pinned hash is the registry's at the time of pinning.
-- **The ephemeral loopback port is unverified.** NanoGPT documents fixed ports; the shortcut flow
-  takes the callback per request, so any port should do. The first real sign-in is the test.
+- **A sign-in on a fallback port is a new app to NanoGPT.** Its consent screen comes up again and
+  the key list may gain another `OAuth: rea-launcher` key; delete the old one there.
 - **Git in a hostile tree.** `git status`, `git diff` and `git log` run unasked, and a target's
   `.git/config` can name a pager or fsmonitor command. OpenCode runs git in the project itself
   too, so the defence is the one the wiki gives: start the session in a working directory, not in

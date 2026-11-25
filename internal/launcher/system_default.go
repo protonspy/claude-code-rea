@@ -51,6 +51,7 @@ func DefaultSystem(version string) (System, error) {
 		AuthURL:          nanoGPTAuthURL,
 		TokenURL:         nanoGPTTokenURL,
 		SignInTimeout:    signInTimeout,
+		SignInPort:       signInPort,
 		Version:          version,
 	}
 	if term.IsTerminal(int(os.Stdin.Fd())) {

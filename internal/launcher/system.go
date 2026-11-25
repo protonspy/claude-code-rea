@@ -29,6 +29,7 @@ type System struct {
 	AuthURL          string // NanoGPT's sign-in page
 	TokenURL         string // NanoGPT's code exchange
 	SignInTimeout    time.Duration
+	SignInPort       int // the loopback port of the sign-in callback; 0 for any
 	Version          string
 }
 
@@ -126,5 +127,6 @@ func (s System) oauth() OAuth {
 		Client:   s.HTTP,
 		Open:     s.OpenURL,
 		Stderr:   s.Stderr,
+		Port:     s.SignInPort,
 	}
 }

@@ -25,6 +25,7 @@ type OAuth struct {
 	Client   *http.Client
 	Open     func(url string) error // opens url in the browser
 	Stderr   io.Writer
+	Port     int // the loopback port the callback listens on; 0 for any
 }
 
 // NanoGPT's shortcut flow, which needs no registered client.
@@ -32,6 +33,7 @@ const (
 	nanoGPTAuthURL  = "https://nano-gpt.com/auth"
 	nanoGPTTokenURL = "https://nano-gpt.com/api/v1/auth/keys"
 	signInTimeout   = 5 * time.Minute
+	signInPort      = 47913
 )
 
 type callback struct {
@@ -51,7 +53,13 @@ func (o OAuth) SignIn(ctx context.Context) (string, error) {
 	}
 	sum := sha256.Sum256([]byte(verifier))
 
-	ln, err := net.Listen("tcp", "127.0.0.1:0")
+	// NanoGPT keeps one callback client per callback URL, so a fixed port lets a later
+	// sign-in meet the same client — and its key — again. A busy port falls back to any.
+	ln, err := net.Listen("tcp", fmt.Sprintf("127.0.0.1:%d", o.Port))
+	if err != nil && o.Port != 0 {
+		fmt.Fprintf(o.Stderr, "rea-launcher: port %d is busy, so NanoGPT will see this sign-in as a new app\n", o.Port)
+		ln, err = net.Listen("tcp", "127.0.0.1:0")
+	}
 	if err != nil {
 		return "", fmt.Errorf("listen for the sign-in callback: %w", err)
 	}
