@@ -54,7 +54,8 @@ From [subscriptions and gateways](https://code.claude.com/docs/en/llm-gateway.md
 
 So the variables belong to the one shell that launches the redirected session. In the `env`
 block of the user-wide `settings.json` they apply to every session, and every session leaves
-the subscription.
+the subscription. A key never goes into any `settings.json` — the user-wide one is a file in
+plain text, and a project's `.claude/settings.json` is committed.
 
 ## One backend per session
 
