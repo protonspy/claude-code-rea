@@ -29,6 +29,8 @@ themselves. -->
 - **gateway** — a proxy that speaks Anthropic Messages to Claude Code and calls a provider in that provider's own format; LiteLLM here. Avoid: router
 - **harness** — the agent program a model runs in, which gives it tools and runs its loop; Claude Code or OpenCode here.
 - **host** — the company that actually runs a model behind a provider; for an aggregator such as NanoGPT, a different company from the provider.
+- **launcher** — `rea-launcher`, the binary that installs the managed toolchain and starts the harness with a provider, a model and REA configured for one run.
+- **managed toolchain** — the Node.js, REA and OpenCode the launcher installs in its own cache directory at pinned versions and hashes, used in place of anything on the `PATH`.
 - **provider** — the service whose API and key the harness uses; NanoGPT or NEAR AI here.
 - **subscription login** — the claude.ai login Claude Code uses when no credential variable is set.
 - **TEE** — a trusted execution environment: a hardware enclave whose attestation lets a client check what code serves its requests.

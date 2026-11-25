@@ -38,3 +38,4 @@ over this file answers with the example above as well as with the notes. -->
 ## Log
 
 <!-- Notes go below, oldest first. `scc notes add` appends here. -->
+- n-0001 2026-11-25 #gotcha @internal/launcher/config.go — encoding/json sorts map keys, and OpenCode applies the last matching permission rule, so the config is an ordered object type, never a map
