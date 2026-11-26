@@ -2,7 +2,7 @@
 autonomy: auto
 ci: wait
 branch: feat/thinking-default
-delivery: in-review
+delivery: merged
 pr: 9
 ---
 
